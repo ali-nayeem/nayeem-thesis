@@ -1,0 +1,14 @@
+main_doc.pdf
+*.log
+*.bak
+*.bbl
+*.aux
+*.xml
+*.sav
+*.gz
+*.blg
+*.loa
+*.lof
+*.lot
+*.out
+*.toc

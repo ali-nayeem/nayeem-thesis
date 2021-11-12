@@ -1,0 +1,28 @@
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                 FNRate   R-squared:                       0.157
+Model:                            OLS   Adj. R-squared:                  0.154
+Method:                 Least Squares   F-statistic:                     69.01
+Date:                Mon, 05 Mar 2018   Prob (F-statistic):           1.23e-53
+Time:                        19:44:12   Log-Likelihood:                 3666.9
+No. Observations:                1490   AIC:                            -7324.
+Df Residuals:                    1485   BIC:                            -7297.
+Df Model:                           4                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      0.0671      0.002     26.976      0.000       0.062       0.072
+PC0            0.0318      0.002     13.499      0.000       0.027       0.036
+PC1            0.0169      0.003      6.201      0.000       0.012       0.022
+PC2            0.0333      0.005      6.875      0.000       0.024       0.043
+PC3            0.0087      0.003      2.849      0.004       0.003       0.015
+==============================================================================
+Omnibus:                        8.443   Durbin-Watson:                   1.668
+Prob(Omnibus):                  0.015   Jarque-Bera (JB):                8.457
+Skew:                           0.164   Prob(JB):                       0.0146
+Kurtosis:                       3.168   Cond. No.                         12.2
+==============================================================================
+
+Warnings:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.

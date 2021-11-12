@@ -1,0 +1,27 @@
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                 FNRate   R-squared:                       0.152
+Model:                            OLS   Adj. R-squared:                  0.150
+Method:                 Least Squares   F-statistic:                     88.74
+Date:                Tue, 06 Mar 2018   Prob (F-statistic):           8.05e-53
+Time:                        11:02:07   Log-Likelihood:                 3662.7
+No. Observations:                1490   AIC:                            -7317.
+Df Residuals:                    1486   BIC:                            -7296.
+Df Model:                           3                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      0.0234      0.010      2.307      0.021       0.004       0.043
+TC             0.0270      0.003     10.212      0.000       0.022       0.032
+Gap            0.0757      0.010      7.244      0.000       0.055       0.096
+SOP            0.0630      0.011      5.676      0.000       0.041       0.085
+==============================================================================
+Omnibus:                       13.755   Durbin-Watson:                   1.675
+Prob(Omnibus):                  0.001   Jarque-Bera (JB):               14.064
+Skew:                           0.213   Prob(JB):                     0.000883
+Kurtosis:                       3.214   Cond. No.                         45.2
+==============================================================================
+
+Warnings:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.

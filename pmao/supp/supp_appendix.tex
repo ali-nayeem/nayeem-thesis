@@ -1,5 +1,5 @@
-\appendix
-\section{Training an XGBoost Regressor} \label{appendix:train_xgboost}
+\graphicspath{{pmao/supp/Figure/}}
+\subsubsection{Training an XGBoost Regressor} \label{appendix:train_xgboost}
 We collected 9675 entries of the form (5D weight vector, FN rate) by executing PMAO framework while varying (dataset, iteration, no. of weight vectors, decomposition strategy) using 27 datasets in set A. Including 10 features (Table~\ref{tab:train_feature}) extracted from the unaligned sequences to those entries we generated $(9675 \times 16)$ data. Among these data, 1363 entries represented superior FN rates than PASTA while the rest 8312 entries were inferior. We used random oversampling to remove this imbalance, thereby we got a training data of $(16624 \times 16)$ data. We round the FN rate values to one decimal place for simplifying the training task. To train an XGBoost model we randomly split the data into train-test by 60\%-40\%. To train a model, we empirically selected the important hyperparameters (Table~\ref{tab:hyperparameter}) and use the default value for the rest. The average performance metrics on the test data were $R^2$-score=0.7633, RMSE=0.0811. XGBoost provides a relative score~\ref{fig:xgboost_feature_imp} for each feature which
 indicates its usefulness in the construction
 of the boosted decision trees within the model.

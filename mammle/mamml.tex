@@ -25,11 +25,11 @@ Here, we present MAMMLE, a framework through which we infuse the concept of MO a
 
 \begin{figure}[!htbp]
 	\centering
-	\includegraphics[width=0.6\textwidth]{Figure/workflow.pdf}
+	\includegraphics[width=0.8\textwidth]{Figure/workflow.pdf}
 	\caption{Simplified workflow of MAMMLE framework.}
 	\label{fig:workflow}
 \end{figure}
-\vspace{-12 mm}
+%\vspace{-12 mm}
 
 \section{Methods}
 The phylogenetic reconstruction pipeline of MAMMLE is illustrate in Figure~\ref{fig:workflow}. The components open to modification are marked with a blue shade. It starts by feeding the unaligned sequences to the system, which simultaneously optimizes four application-aware objectives with the help of $N$ well-distributed 4D weight vectors given as input and generate $N$ (in this article $N=30$) alternative alignments (please refer to Section S1 of the supplementary file for details). %We choose to work with MUSCLE due to its simplicity and efficacy. %Although we use MUSCLE in this article due to its simplicity and efficacy, it can be replaced by other iterative MSA methods. 
@@ -134,9 +134,9 @@ We evaluate the accuracy of each estimated phylogenetic tree with respect to the
 \begin{figure}[!htbp]%
 	\begin{adjustwidth}{-1.1cm}{}
 		\centering
-		\begin{subfigure}{0.25\textwidth} \includegraphics[width=\textwidth]{Figure/comparison} \caption{FN rate distribution}\end{subfigure}
-		\begin{subfigure}{0.25\textwidth} \includegraphics[width=\textwidth]{Figure/delta3} \caption{MAMMLE: FN rate improvement}\end{subfigure}
-		\begin{subfigure}{0.35\textwidth} \includegraphics[width=\textwidth]{Figure/delta5} \caption{Individual FN rate: MUSCLE vs MAMMLE}\end{subfigure}
+		\begin{subfigure}{0.30\textwidth} \includegraphics[width=\textwidth]{Figure/comparison} \caption{FN rate distribution}\end{subfigure}
+		\begin{subfigure}{0.30\textwidth} \includegraphics[width=\textwidth]{Figure/delta3} \caption{MAMMLE: FN rate improvement}\end{subfigure}
+		\begin{subfigure}{0.40\textwidth} \includegraphics[width=\textwidth]{Figure/delta5} \caption{Individual FN rate: MUSCLE vs MAMMLE}\end{subfigure}
 		%		\subfloat[FN rate distribution]{\label{fig:boxplot}\includegraphics[width=0.25\textwidth]{comparison}}%
 		%		\subfloat[MAMMLE: FN rate improvement]{\label{fig:scatter}\includegraphics[width=0.25\textwidth]{delta3}}
 		%		

@@ -5,20 +5,20 @@
 \input{cybernatics/supp/supp_description} 
 
 \graphicspath{{snoga/}}
-\subsection{Preliminaries}
+\section{Preliminaries}
 Here we briefly describe the preliminary concepts about species tree estimation. 
-\begin{comment}
+%\begin{comment}
 Phylogeny refers to the evolutionary relationships among a set of entities such as species, genes, etc. The entities under consideration are generally referred to as taxa. Each such taxon is placed as a leaf in a phylogenetic tree and the tree topology represents the evolutionary history. The non-leaf (i.e. internal) nodes of the tree represent hypothetical ancestral taxa from which the present day taxa evolved. These ancestral taxa are believed to have existed in the past, but has become extinct. Notably, a tree $T$ is a connected acyclic graph with a set of vertices $V$ and a set of edges $E$. An edge $e = (u, v) \in E$ represents an evolutionary relationship between the two taxa represented by the vertices $u$ and $v$. 
 
 \begin{figure}[!tb]
 \centering
-\includegraphics[width=0.7\textwidth]{Figure/outgroup.eps}
+\includegraphics[width=0.9\textwidth]{Figure/outgroup.eps}
 \caption{A phylogenetic tree relating four species: human, chimpanzee, gorilla and orangutan. }
 \label{fig:outgroup}
 \end{figure}
 
 Fig.~\ref{fig:outgroup} shows a sample phylogenetic tree among four species: human, chimpanzee, gorilla and orangutan. This evolutionary tree depicts that human and chimpanzee share a common ancestor. As such, we consider humans to be more closely related to chimpanzees than they are to gorillas and orangutans.
-\end{comment}
+%\end{comment}
 \subsubsection{Rooted and unrooted trees} 
 In a rooted phylogenetic tree (left part of Fig.~\ref{fig:outgroup}), one vertex $r \in V$ is designated as the root of the tree whereas there is no such designated vertex in an unrooted tree (right part of Fig.~\ref{fig:outgroup}). True evolutionary histories are better represented by a rooted tree. However, identifying the root of an estimated phylogenetic tree is generally a difficult task.
 
@@ -37,9 +37,9 @@ However, when gene copies are sampled from various species, the gene tree relati
 
 \subsubsection{Incomplete Lineage Sorting}\index{Incomplete lineage sorting (ILS)}
 
-Incomplete lineage sorting (ILS) refers to the failure of two gene lineages to coalesce at their speciation point. Also known as deep coalescence, this process is best understood under the multi-species coalescent (MSC) model~\cite{degnan2006discordance, degnan2005gene}. This model explains the evolutionary process by going backward in time and connecting gene lineages to a common ancestor through a process of ``coalescence" of lineage pairs. This is explained with an example in the Appendix.
+%Incomplete lineage sorting (ILS) refers to the failure of two gene lineages to coalesce at their speciation point. Also known as deep coalescence, this process is best understood under the multi-species coalescent (MSC) model~\cite{degnan2006discordance, degnan2005gene}. This model explains the evolutionary process by going backward in time and connecting gene lineages to a common ancestor through a process of ``coalescence" of lineage pairs. This is explained with an example in the Appendix.
+%\section{Incomplete Lineage Sorting}%\index{Incomplete lineage sorting (ILS)}
 
-\section{Incomplete Lineage Sorting}%\index{Incomplete lineage sorting (ILS)}
 Incomplete lineage sorting (ILS) refers to the failure of two gene lineages to coalesce at their speciation point. Also known as deep coalescence, this process is best understood under the coalescent model~\cite{degnan2006discordance, degnan2005gene}. This model explains evolutionary process by going backwards in time and connecting gene lineages to a common ancestor through a process of ``coalescence" of lineage pairs. In this model, each species is treated as a population of individuals, having a pair of alleles for each gene. The present day variants of a gene (known as alleles) are then traced back in time across successive generations by following the ancestral alleles in the previous generation from which this given alleles evolved. Eventually a point is reached where two alleles coalesce (i.e., they find a common ancestor). The multi-species coalescent (MSC) model is the extension of this general coalescent framework where multiple randomly mating populations corresponding to multiple species are present.
 %, nei1987molecular, tajima1983evolutionary, takahata1989gene
 \begin{figure}[!tb]

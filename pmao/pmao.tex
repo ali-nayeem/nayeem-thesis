@@ -704,7 +704,8 @@ We compare the FN rates of the aforementioned summarizing schemes with PASTA on 
     *Statistic & 10.7149 & \multicolumn{3}{c|}{\multirow{2}{*}{N/A}} \\
 \cline{1-2}    *$p$-value & 0.0047 & \multicolumn{3}{c|}{} \\
     \hline
-    \end{tabular}\label{tab:test-summary}\end{table} 
+    \end{tabular}\label{tab:test-summary}
+\end{table} 
 
 \section{Conclusion}
 This paper focused on inferring better phylogenetic trees from MSAs by incorporating many application-aware objective functions through decomposition-based MO principles. In this direction, we developed the PMAO framework, which is based on PASTA, one of the most celebrated algorithms/tools in this regard. We evaluated the PMAO framework and examined its capability to yield high-quality tress by experimenting on the widely used BAliBASE 3.0 benchmark. The PMAO framework, like other MO algorithms, outputs a good number of alternative solutions that are equivalent (usually referred to as the non-dominated solutions) in the context of the conflicting objectives considered in the MO framework. Some of these solutions may however be of relatively lower quality from the application perspective. To this end, we innovatively employ machine learning to help PMAO generate only five solutions encompassing at least one top quality solution. Furthermore, summarizing those five solutions to obtain a single one can offer better accuracy over PASTA in most of the cases, although not as good as the overall PMAO best. In the future, we endeavor to enhance the summarizing approach and apply other strategies of leveraging the alternative MSAs/trees to single out the overall PMAO best solution.

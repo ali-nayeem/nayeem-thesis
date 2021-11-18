@@ -1,72 +1,7 @@
-%%This is a very basic article template.
-%%There is just one section and two subsections.
-\documentclass[a4paper,oneside,12pt]{report}
-\usepackage[top=1.5in, bottom=1.5in, left=0.8in, right=0.8in]{geometry}
-\usepackage{graphicx} 
-\usepackage{amsmath,amsfonts,amssymb}
-%\usepackage[sorting=none]{biblatex}                       
-\usepackage{color} %only temporary for proof pointing
-\usepackage{verbatim} 
-\usepackage[chapter]{algorithm}
-%\usepackage{algpseudocode} 
-\usepackage{setspace} %used to reduce line spacing in algorithm float
-\usepackage{hyperref}
-\usepackage{fancyhdr, blindtext}
-\usepackage{tabularx}
-\usepackage{subcaption}
-%cybernatics
-\usepackage{multirow}
-\usepackage{changepage}
-%\usepackage{algorithmic}
-\usepackage{algpseudocode} 
-\usepackage{enumerate}
-\usepackage{makecell}
-%snoga
-\usepackage{enumitem}
-\usepackage{numprint}
-%pmao
-\usepackage{tikz,pgfplots,pgfplotstable}
-\usetikzlibrary{arrows,calc,positioning}
-\usetikzlibrary{shapes,chains}
-\pgfplotsset{compat=newest}
-\usepackage{colortbl}
-\usepackage{pgffor}
-\usepackage{alphalph}
-\usepackage{longtable}
-\renewcommand*{\thesubfigure}{%
-	\alphalph{\value{subfigure}}%
-}%
-%original
-\setlength{\extrarowheight}{5pt}
-%################only for fancy header
-%\usepackage{fancyhdr} 
-%\pagestyle{fancy}
-%\rightmark  
-%\includeonly{chapter_2, chapter_3} 
-\newcounter{lemma_counter}[chapter]
-\newcounter{def_counter}[chapter]   
-\newcommand{\lemma}{\refstepcounter{lemma_counter}Lemma \arabic{chapter}.\arabic{lemma_counter}} %macro to track lemma numbers in different chapters
-\newcommand{\defn}{\refstepcounter{def_counter}Definition \arabic{chapter}.\arabic{def_counter}} %macro to track defnition numbers in different
-% chapters 
-%\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} %used by the titlepage creator file thesis_title.tex
-\linespread{1.5} 
-\renewcommand{\arraystretch}{1.2}
-\newcommand{\citep}[1]{\cite{#1}}
-%cybernatics
-\renewcommand{\citep}[1]{\cite{#1}}
-\newcommand{\citealp}[1]{\cite{#1}}
-\renewcommand{\algorithmiccomment}[1]{~{\scriptsize\ttfamily{/*#1*/}}}
-\newcommand{\STATE}[1]{\State{#1}}
-\newcommand{\COMMENT}[1]{\Comment{#1}}
-\newcommand{\WHILE}[1]{\While{#1}}
-\newcommand{\FOR}[1]{\For{#1}}
-\newcommand{\IF}[1]{\If{#1}}
-\newcommand{\ENDFOR}{\EndFor}
-\newcommand{\ENDWHILE}{\EndWhile}
-%%%%%%%for sqeezing table column from toufiue
-\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\def\ifundefined#1{\expandafter\ifx\csname#1\endcsname\relax} \ifundefined{preambleloaded}
+\typeout{PRECOMILED PREAMBLE NOT LOADED}\input{preamble} \else
+\typeout{\preambleloaded}
+\fi
     
 \begin{document}   
 \pagenumbering{roman}    

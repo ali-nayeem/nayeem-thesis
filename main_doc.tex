@@ -1,8 +1,8 @@
-
-\def\ifundefined#1{\expandafter\ifx\csname#1\endcsname\relax} \ifundefined{preambleloaded}
-\typeout{PRECOMILED PREAMBLE NOT LOADED}\input{preamble} \else
-\typeout{\preambleloaded}
-\fi
+%&preamble
+%\def\ifundefined#1{\expandafter\ifx\csname#1\endcsname\relax} \ifundefined{preambleloaded}
+%\typeout{PRECOMILED PREAMBLE NOT LOADED}\input{preamble} \else
+%\typeout{\preambleloaded}
+%\fi
 
      
 \begin{document}   
@@ -31,9 +31,9 @@
 \input{chapter_1_Introduction} 
 \input{chapter_2_Background}
 \input{cybernatics/cybernatics}
-\input{pmao/pmao}
-\input{mammle/mamml}
-\input{snoga/snoga}
+%\input{pmao/pmao}
+%\input{mammle/mamml}
+%\input{snoga/snoga}
 
 %\input{conclusion}
 %\clearpage 
@@ -42,10 +42,9 @@
 %\addcontentsline{toc}{part}{Appendices}
 \appendix
 \chapter{Supplementary results}
-\input{cybernatics/supp/supp}
-\input{pmao/supp/supp}
-\input{mammle/supp_result}
-%\input{snoga/section_6_Appendix}
+%\input{cybernatics/supp/supp}
+%\input{pmao/supp/supp}
+%\input{mammle/supp_result}
 \bibliographystyle{unsrt}
 %\bibliographystyle{IEEEtran}  
 \bibliography{phd-union}

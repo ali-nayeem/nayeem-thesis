@@ -19,18 +19,18 @@ MSA computation is an intractable optimization task which is performed using som
 				\caption{Pairwise score of two aligned sequences.}
 				\label{fig:pairwise}
 			\end{subfigure}	
-			\begin{subfigure}[b]{0.5\columnwidth}
+			\begin{subfigure}[b]{0.45\columnwidth}
 				\includegraphics[width=\columnwidth]{Figure/agp}
 				\caption{Affine gap penalty of an aligned sequence.}
 				\label{fig:agp}
 			\end{subfigure}
-			\begin{subfigure}[b]{0.5\columnwidth}
+			\begin{subfigure}[b]{0.45\columnwidth}
 				\includegraphics[width=\columnwidth]{Figure/entropy_score}
 				\caption{Entropy of a column of alignment.}
 				\label{fig:entropy}
 			\end{subfigure}
 		\end{adjustwidth}
-		\caption{Three objective functions for MSA. The example alignment is adopted from~\citep{rubio2016hybrid}.}
+		\caption{Calculation of objective functions for MSA.} %The example alignment is adopted from~\citep{rubio2016hybrid}
 		\label{fig:msa_obj}
 	\end{figure}
 	
@@ -115,7 +115,7 @@ We illustrated the above concepts using Figure \ref{fig:pareto}. Here we conside
 }%\end{definition}
 
 
-\section{Multi-objective metaheuristics}
+\subsection{Multi-objective metaheuristics}
 \label{sec:mop}
 While optimizing multiple objective functions simultaneously, a multi-objective metaheuristics determines a set of solutions (instead of a single solution) which represents the best-possible compromise of all objectives. A solution is said to dominate another one if and only if it is equal to that solution in all objectives and also better than that in at least one objective. A solution is said to be Pareto optimal if no other solutions can dominate it. The set of all Pareto optimal solutions is called Pareto set and the image of pareto set in the objective space is known as Pareto front. However, practically a multi-objective metaheuristics aims to approximate the Pareto front as precisely as possible with a finite number of solutions.
 

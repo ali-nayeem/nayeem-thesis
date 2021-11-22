@@ -22,13 +22,13 @@ Fig.~\ref{fig:outgroup} shows an example phylogenetic tree among four species: h
 %\subsubsection{Rooted and unrooted trees} 
 In a rooted phylogenetic tree (left part of Fig.~\ref{fig:outgroup}), one vertex $r \in V$ is designated as the root of the tree whereas there is no such designated vertex in an unrooted tree (right part of Fig.~\ref{fig:outgroup}). True evolutionary histories are better represented by a rooted tree. However, identifying the root of an estimated phylogenetic tree is generally a difficult task.
 
-\section{Phylogeny Estimation}
+\subsection{Phylogeny Estimation}
 
-\section{Evaluation of Phylogeny Estimation methods}\label{sec:phyPerf}
+\subsection{Evaluation of Phylogeny Estimation methods}\label{sec:phyPerf}
 The performance of a species tree estimation is evaluated by comparing its output tree to the ground truth (i.e., true species tree provided with the simulated dataset) using False Negative (FN) rate also known as the missing branch rate. FN rate actually expresses (in percentage) the fraction of edges that exist in the latter (i.e., in true tree) but are absent in the former (i.e., in the estimated one). Clearly, the smaller the
 value of FN rate, the more desirable it is. Although there are two more common tree error measures (False Positive (FP rate) and Robinson-Foulds (RF) rate), all of them are identical when true and estimated trees are binary. In this thesis, we worked with binary trees only.
 
-\section{Discordance between Gene tree and Species tree}\index{Gene tree discordance}
+\subsection{Discordance between Gene tree and Species tree}\index{Gene tree discordance}
 We now discuss the issue of discordance between a gene tree and species tree and the reasons behind it. A species tree represents the evolutionary history among a set of species via the process of speciation. On the contrary, a gene tree represents the evolution of a particular ``gene" within a group of species. When species are split by speciation, the gene copies within species are also split into separate lineages of descent.  Within each such lineage, the gene trees continue branching and descending through time. Thus, the gene trees are contained within the branches of the species trees~\cite{maddison1997gene}.
 However, when gene copies are sampled from various species, the gene tree relating these copies might disagree with the species phylogeny. Fig.~\ref{fig:discordance} shows an example of discordance between a species tree and a gene tree. Here, species $B$ and $C$ are ``sister" species. However, in the gene lineage, $C$ is closer to $D$ than $B$. This discord can arise from the horizontal transfer, incomplete lineage sorting, and gene duplication and extinction~\cite{maddison1997gene}. 
 
@@ -41,7 +41,7 @@ However, when gene copies are sampled from various species, the gene tree relati
 
 
 
-\subsection{Incomplete Lineage Sorting}\index{Incomplete lineage sorting (ILS)}
+\subsubsection{Incomplete Lineage Sorting}\index{Incomplete lineage sorting (ILS)}
 
 %Incomplete lineage sorting (ILS) refers to the failure of two gene lineages to coalesce at their speciation point. Also known as deep coalescence, this process is best understood under the multi-species coalescent (MSC) model~\cite{degnan2006discordance, degnan2005gene}. This model explains the evolutionary process by going backward in time and connecting gene lineages to a common ancestor through a process of ``coalescence" of lineage pairs. This is explained with an example in the Appendix.
 %\section{Incomplete Lineage Sorting}%\index{Incomplete lineage sorting (ILS)}
@@ -77,12 +77,12 @@ The triplet score~\cite{islam2019stelar}, similar to quartet score, counts the n
 It measures the likelihood of a candidate species tree given the triplet distribution of the input gene trees and maximized by MP-EST~\cite{mpest} as an estimator of the species tree.
 \end{comment}
 
-\subsection{Statistical consistency}\index{Statistical consistency}
+\subsubsection{Statistical consistency}\index{Statistical consistency}
 
 A species tree reconstruction method is said to be statistically consistent under a particular model of evolution if the probability of returning the true species tree converges to one as the amount of data increases. Let the set of genes in a study be $\mathcal{G} = \{g_1, g_2, \dots, g_M\}$. Let $s_i$ be the number of sites in $g_i$ ($1 \leq i \leq M$). Then A species tree estimation method is statistically consistent if the estimated species tree converges to the true species tree as $M \rightarrow \infty$, $\underset{1 \leq i \leq M}{s_i} \rightarrow \infty$.
 
 
-\subsection{Optimization criteria for species tree estimation}
+\subsubsection{Optimization criteria for species tree estimation}
 Various criteria are statistically consistent estimators of the true species tree under the MSC model. Each of them measures how well a candidate species tree can summarize the input gene trees. Three examples are as follows:
 \begin{itemize}
 	\item Quartet score (maximized by ASTRAL~\cite{mirarab2014astral}): The quartet score of a given candidate species tree $T$ is the total, across all the input gene trees, of the number of induced quartet trees that $T$ agrees with. This score is maximized by ASTRAL to estimate the species tree.

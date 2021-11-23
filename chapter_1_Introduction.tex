@@ -71,19 +71,22 @@ By accomplishing our objectives mentioned above we expect to obtain the followin
 
 \section{Thesis Organization}
 
-The rest of the chapters are organized as follows.
+The rest of the thesis is organized as follows.
 
-In Chapter~\ref{ch:Preliminaries} we introduce preliminary concepts and terminologies of computational phylogenetics
+In Chapter~\ref{ch:background} we introduce preliminary concepts and terminologies of computational phylogenetics
 relevant to the contribution of this thesis. We introduce the optimization task of phylogeny estimation and MSA computation. We present different methodology and metrics to evaluate the performance of those task. Since we employ multi-objective optimization strategies this thesis, we therefore discuss its basic concepts along with some popular multi-objective metaheuristics.
 
-In Chapter~\ref{ch:cybernatics},  we develop a systematic methodology for choosing an appropriate multi-objective formulation of MSA considering the application domain (i.e., in our case phylogeny estimation). We identify two phylogeny-aware bi-objective formulations of MSA. It presents a scientific discourse along with a comparative analysis on the overall efficacy of the concept of domain-specific measures in general and phylogeny-awareness in particular. 
+Chapter~\ref{ch:cybernatics} begins with a discussion on the present state of MSA method. Afterwards we gradually develop a systematic methodology for choosing an appropriate multi-objective formulation of MSA considering the application domain (i.e., in our case phylogeny estimation). We identify two phylogeny-aware bi-objective formulations of MSA. We present a scientific discourse along with a comparative analysis on the overall efficacy of the concept of domain-specific measures in general and phylogeny-awareness in particular. 
 
-In Chapter~\ref{ch:pmao},  we propose a robust method for alignment-based phylogeny estimation stemming from the hybridization of a state-of-the-art iterative MSA method and many-objective optimization strategies.
+In Chapter~\ref{ch:pmao}, we utilize the findings of Chapter~\ref{ch:cybernatics} by designing the PMAO framework, based on PASTA, one of the most celebrated MSA tool, by incorporating many phylogeny-aware objective functions through principles of multi-objective optimization, to generate a bunch of high-quality phylogenetic trees. We innovatively employ supervised machine learning within the PMAO framework to generate a smaller number of top solutions to assist the domain expert in choosing the final solution through visual inspection. We experiment with summarizing the PMAO outputs using greedy consensus and quartet consistency to obtain a single high-quality solution without using any external evidence.
 
-In Chapter~\ref{ch:mammle}, we present an Open-source software for estimating phylogenetic trees from MSAs using our proposed approaches. 
+%a robust method for alignment-based phylogeny estimation stemming from the hybridization of many-objective optimization strategies and PASTA which is one of the most celebrated MSA tool.
+
+In Chapter~\ref{ch:mammle}, we introduce MAMMLE, a framework for inferring better phylogenetic trees from unaligned sequences by hybridizing MUSCLE with multiobjective optimization strategy and leveraging multiple Maximum Likelihood hypotheses. MAMMLE is a flexible framework whose components can potentially be modified, replaced, or further refined by bioinformatics researchers and practitioners. We provide the Linux and Mac OS X implementation of MAMMLE as an Open Source tool.
+%we present an Open-source software for estimating phylogenetic trees from MSAs using our proposed approaches. 
 
 
-In Chapter~\ref{ch:snoga}, we focus on species tree estimation, particularly when the gene tree discordance is modeled by incomplete lineage sorting (ILS) or deep coalescence. We formulate this task as a multi-objective task utilizing different statistically consistent criteria from existing summary methods and design a customized multi-objective optimization algorithm.
+Chapter~\ref{ch:snoga} focuses on species tree estimation from multi-locus data. We consider that different regions within genome can evolve independently and species tree is a generalization of the gene lineages. After discussing the present state of the problem, we formulate the task as a multi-objective task utilizing different statistically consistent criteria from existing summary methods and design a customized multi-objective optimization algorithm.
 
 
 Finally, we offer concluding remarks and direction for further research in Chapter~\ref{ch:conclusion}.

@@ -57,21 +57,22 @@ MSA computation is an intractable optimization task which is performed using som
 
 %\subsubsection{Evaluation of MSA methods}
 \subsection{Evaluation of MSA methods}
-An MSA method is evaluated by comparing its output to the reference alignment provided with a dataset. Several performance measures are used to perform such which are defined below. For each of these measures, higher value implies better performance.
+An MSA method is evaluated by comparing its output to the manually refined reference alignment provided by benchmark dataset. Several performance measures are used to perform such which are defined below. 
 \begin{itemize}
-	\item TC-score (TC stands for Total Column) is the ratio of the number of correctly aligned columns in the estimated alignment to the total number of aligned columns in the reference alignment. This is also known as column score.
+	\item TC-score (Total Column score) is the ratio of the number of correctly aligned columns in the estimated alignment to the total number of aligned columns in the reference alignment. This is also known as column score.
 	
-	\item SP-score (SP stands for Sum of Pairs) is the ratio of the number of aligned pairs in the estimated alignment to the total number of aligned pairs in the reference alignment. This is also known as Q-score and Developer score.
+	\item SP-score (Sum of Pairs score) is the ratio of the number of aligned pairs in the estimated alignment to the total number of aligned pairs in the reference alignment. This is also known as Q-score and Developer score.
 	
 	\item Modeler is very similar to the SP-score where we take the ratio of the number of aligned pairs to the total number of aligned pairs in the estimated alignment.
 	
 	\item Pairs score is the mean of SP-score and Modeler.   % SP-score is the ratio of the number of aligned pairs to the total number of aligned pairs in the reference alignment. And 	
 \end{itemize}
+For each of these measures, higher value implies better performance. SP-score and TC-score are the most popular and can be found in nearly all studies on MSA methods.
 
 
 \section{Multi-objective optimization}
 \label{sec:MaOEA_background}
-A multi-objective optimization problem (MOP) having $m$ objective function is defined as follows:
+A multi-objective optimization problem (MOP) having $m$ objective functions is defined as follows:
 \begin{center}
 	Minimize/Maximize $y = f(x) = (f_1(x), f_2(x),\dots,f_m(x))$\\
 	Subject to $x \in \Omega$
@@ -103,7 +104,7 @@ We illustrated the above concepts using Figure \ref{fig:pareto}. Here we conside
 \begin{figure} [!htbp]
 	\centering
 	\includegraphics[width=0.9\columnwidth]{Figure/pareto.png}\\
-	\caption{Illustration of Pareto Front for a MOP with two decision variables and two minimization objectives. Image source:  \cite{zhu2013imasko}.}\label{fig:pareto} 
+	\caption{Illustration of Pareto Front for a MOP with two decision variables and two minimization objectives. Image borrowed from  \cite{zhu2013imasko}.}\label{fig:pareto} 
 \end{figure}
 
 \defn { Goal of optimizing an MOP:

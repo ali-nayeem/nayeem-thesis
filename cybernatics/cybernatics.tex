@@ -64,9 +64,9 @@ if the purpose is phylogeny inference, then, the success should be evaluated bas
 In this chapter, our context is phylogeny estimation and we aim to address the above mentioned limitations of MO optimization for MSA in that context. In particular, we propose a new method that leverages multivariate linear regression for selecting application-aware MO formulations. We notice several prior efforts (e.g.,~\citep{lu2012classification, zhou2005study}) on regression-assisted optimization approaches. However, unlike ours, those works focused on constructing a surrogate model, by applying regression techniques, for computationally expensive fitness evaluation.
 
 
-  \section{Methods}
+\section{Methods}
 \label{sec:methods}
-Because we deal with numerous objective functions, exisitng MSA methods and datasets, a reader is exposed to an over-preponderance of acronyms and short-cut notations. Therefore, for the sake of ease in exposition and understanding, Table~\ref{tab:acronyms} of the supplementary file alphabetically lists all the acronyms used in this paper along with their intended usage.
+%Because we deal with numerous objective functions, exisitng MSA methods and datasets, a reader is exposed to an over-preponderance of acronyms and short-cut notations. Therefore, for the sake of ease in exposition and understanding, Table~\ref{tab:acronyms} of the supplementary file alphabetically lists all the acronyms used in this paper along with their intended usage.
 
 \begin{figure}[!htbp]
 	\centering
@@ -79,7 +79,7 @@ Because we deal with numerous objective functions, exisitng MSA methods and data
 
 \subsection{Experiment settings}
 \label{sec:exp_settings}
-We summarize our experimental methodology (also illustrated in Figure~\ref{fig:pipeline}) in six steps as follows.
+We summarize our experimental methodology which is also illustrated in Figure~\ref{fig:pipeline} adopted in this chapter in six steps as follows.
 \begin{itemize}
 	\item \underline{Step 1:} We identify and choose two bi-objective formulations, effective for phylogeny estimation, by adopting a systematic method incorporating multivariate linear regression analysis with the help of a simulated dataset. \item \underline{Step 2:} We optimize each bi-objective formulation selected in Step 1 by
 	 running an appropriate MO metaheuristics on biological datasets. Each run outputs some competitive alignments. 
@@ -96,7 +96,8 @@ Most of the real-life optimization problems actually aim to achieve multiple obj
 	\item \textit{\{wSOP, TC\} formulation~\citep{rubio2016hybrid}:} Here, wSOP, i.e., the weighted sum of pairs with affine gap penalties and TC are maximized.
 \end{itemize}
 
-These objective functions with examples have been discussed in the supplementary file (please check Section~\ref{sec:objective _function}). Here  four new objective functions are proposed in the context of an MSA, which quantify different aspects thereof. We deliberately do not combine multiple aspects of an MSA into a single objective, unlike the approach taken predominantly in the literature. We introduce these four new objective functions as follows: 
+%These objective functions with examples have been discussed in the supplementary file (please check Section~\ref{sec:objective _function}). 
+Here  four new objective functions are proposed in the context of an MSA, which quantify different aspects thereof. We deliberately do not combine multiple aspects of an MSA into a single objective, unlike the approach taken predominantly in the literature. We introduce these four new objective functions as follows: 
 
 \begin{itemize}
 	\item \textbf{Minimizing entropy (Entropy)}: Contrary to the usual definition, we consider only non-gap columns for the calculation of entropy.
@@ -119,8 +120,7 @@ From onward, the objectives discussed above are denoted by the acronyms listed i
 \end{table}
 
 To evaluate SOP and wSOP, a substitution matrix is needed which depends on dataset characteristics. We have employed NUC4.4 and BLOSUM62 (available at ftp://ftp.ncbi.nih.gov/blast/matrices) for nucleotide and protein sequences, respectively. Informatively, all four objective functions we have proposed above are nonparametric.\subsection{MO metaheuristics}
-We utilize three well-known MO metaheuristics: NSGA-II~\citep{deb2002fast}, NSGA-III~\citep{deb2014evolutionary} and MOEA/D~\citep{zhang2007moea}. They belong to the class of MO evolutionary algorithms. They start from a set of candidate solutions (termed as population) and then mimics concepts of natural evolution (such as mutation, crossover, selection, etc.) to evolve the population towards the optimal solutions. Unlike single-objective optimization methods, they output a lot of solutions (i.e., members of the final population) which is a compromise among all objectives in the best possible way. Three studies (\citep{zambrano2017m2align, ortuno2013optimizing, zambrano2017comparing}) demonstrated the superiority of NSGA-II to compute MSAs. NSGA-II can effectively tackle problems with upto three objectives whereas NSGA-III is developed in a particular way to handle more than three objectives. Keeping these in minds, we apply them according to Table~\ref{tab:variants}. We run MOEA/D, studied by~\cite{zhu2015novel} for MSA, with one formulation to compare its performance against NSGA-II.
-These methods along with important parameters thereof are described in Section~\ref{sec:mop} (of the supplementary file). Besides, a short description of their vital components as follows. 
+We utilize three well-known MO metaheuristics: NSGA-II~\citep{deb2002fast}, NSGA-III~\citep{deb2014evolutionary} and MOEA/D~\citep{zhang2007moea}. They belong to the class of MO evolutionary algorithms. They start from a set of candidate solutions (termed as population) and then mimics concepts of natural evolution (such as mutation, crossover, selection, etc.) to evolve the population towards the optimal solutions. Unlike single-objective optimization methods, they output a lot of solutions (i.e., members of the final population) which is a compromise among all objectives in the best possible way. Three studies (\citep{zambrano2017m2align, ortuno2013optimizing, zambrano2017comparing}) demonstrated the superiority of NSGA-II to compute MSAs. NSGA-II can effectively tackle problems with upto three objectives whereas NSGA-III is developed in a particular way to handle more than three objectives. Keeping these in minds, we apply them according to Table~\ref{tab:variants}. We run MOEA/D, studied by~\cite{zhu2015novel} for MSA, with one formulation to compare its performance against NSGA-II. The core components used in all the aforementioned metaheuristics are briefly described as follows. 
 \begin{itemize}
 	\item We used the encoding scheme proposed by~\cite{rubio2016hybrid} which stores each sequence as $[(b_1, e_1),$ $(b_2, e_2), ..., (b_n, e_n)]$, where $(b_i, e_i)$ represents the begin and end position of a group of consecutive gaps in the sequence. \cite{zambrano2017m2align} studied the benefit of such encoding over the traditional binary representation.
 	
@@ -129,7 +129,7 @@ These methods along with important parameters thereof are described in Section~\
 	\item The crossover operator~\citealp{da2010alineaga} acts as a single-point crossover on two parent alignments (let us refer to them as $ P1 $ and $ P2 $). It picks a random column from P1 to break it into two segments: $ P1^L $ and $ P1^R $. The selected column elements are located in P2 (which are not necessarily belongs to the same column) and used to cut P2 into two segments: $ P2^L $ and $ P2^R $. Then, the generated segments are interchanged between these two parents to create two offspring alignments: [$P1^L + P2^R$] and [$P2^L + P1^R$]. At the end, gaps are used to fill the empty cells (if any) appeared at the junction.
 \end{itemize}
 
-We implemented the above two metaheuristics using jMetalMSA~\citep{zambrano2017multi} which is a Java metaheuristic framework for MSA. The important parameters with corresponding values are listed in Table~\ref{tab:parameters}. We adopt the same mutation and crossover operator, along with the associated parameter values, used by~\cite{ortuno2013optimizing}.  
+We implemented the above two metaheuristics using jMetalMSA~\citep{zambrano2017multi} which is a Java metaheuristic framework for MSA. The important parameters with corresponding values are listed in Table~\ref{tab:parameters}. For NSGA-II and NSGA-III, we use the tuned values of the relevant parameters from~\cite{ortuno2013optimizing} and for MOEA/D we use the configuration values tuned by~\citep{zhu2015novel}. We adopt the mutation and crossover parameter values used by~\cite{ortuno2013optimizing}. 
 
 \begin{comment}
 We provide a short description of these operators below. 
@@ -173,7 +173,7 @@ We provide a short description of these operators below.
 		\cline{2-3}          & Aggregation function & Tchebycheff approach \\
 		\hline
 	\end{tabular}%
-	\label{tab:parameters}%
+	\label{tab:cyb-parameters}%
 \end{table}%
 
 \begin{table}[!htbp]
@@ -192,8 +192,12 @@ We provide a short description of these operators below.
 		\hline
 		\multicolumn{1}{|c|}{\multirow{1}{*}{MOEA/D}} & \{SimNG, SimG\}\\
 		\hline
-	\end{tabular}\label{tab:variants}\end{table}These algorithms have been implemented using an open-source framework, jMetalMSA (\url{https://github.com/jmetal/jmetalmsa}). We have made our source code available at \url{https://github.com/ali-nayeem/MSA}.\subsection{State-of-the-art MSA tools}
- We use nine representative MSA tools (listed in Table~\ref{tab:msa_tools}) in our experimental study. Each of them is invoked with the default parameter settings. Moreover, we randomly generate the initial population of our chosen metaheuristics by mixing and modifying the alignments generated by these tools. \begin{table}[htbp]
+	\end{tabular}\label{tab:variants}\end{table}These algorithms have been implemented using an open-source framework, jMetalMSA (\url{https://github.com/jmetal/jmetalmsa}). We have made our source code available at \url{https://github.com/ali-nayeem/MSA}.
+
+\subsection{State-of-the-art MSA tools}
+ We use nine representative MSA tools (listed in Table~\ref{tab:msa_tools}) in our experimental study. Each of them is invoked with the default parameter settings. Moreover, we randomly generate the initial population of our chosen metaheuristics by mixing and modifying the alignments generated by these tools. Notably, this approach,known as the seeded initial population generation, is quite common in the metaheuristics literature specially for multi-objective optimization.
+ 
+ \begin{table}[htbp]
 \centering
 	\caption{ Existing MSA tools used for experimentation.}
 	\begin{tabular}{|l|l||l|l|}
@@ -220,10 +224,14 @@ We provide a short description of these operators below.
 		\hline
 		Kalign~\citep{lassmann2008kalign2} & 2.03  & Kalign & 2.04 \\
 		\hline
-	\end{tabular}\label{tab:msa_tools}\end{table}\subsection{Evaluation of estimated alignments}
+	\end{tabular}\label{tab:msa_tools}\end{table}
+
+\subsection{Evaluation of estimated alignments}
 \label{sec:msa_eval}
 We evaluate estimated alignments using two widely known alignment quality measures: SP and TC scores. They compare the estimated alignment (output) to the reference alignment (reference) in two different ways: the former expresses the ratio of aligned columns recovered in the output with respect to the aligned columns present in the reference, whereas the latter shows the ratio of aligned pairs. 
-A higher value implies better score for both of them.\subsection{Estimating Phylogenetic trees}
+A higher value implies better score for both of them.
+
+\subsection{Estimating Phylogenetic trees}
 \label{sec:tree_estimation}
 For each generated alignment, we generate the phylogenetic tree. To do so, we use a the standard way of estimating phylogenetic trees from sequence data, i.e., the Maximum Likelihood  method~\cite{liu2011raxml}. FastTree\citep{price2010fasttree} and RAxML~\citep{stamatakis2014raxml} are the most widely used software for this purpose. FastTree can produce output very quickly with negligible difference in tree accuracy compared to RAxML~\cite{liu2011raxml}. In this thesis we had to estimate numerous phylogenetic trees. So we prefer FastTree over RAxML.\subsection{Evaluating phylogenetic trees}
 \label{sec:tree_eval}
@@ -235,8 +243,7 @@ Therefore, in an attempt to assess the effectiveness of an objective function we
 Therefore, in our approach, multivariate linear regression has been employed to estimate the above-mentioned correlation (i.e., regression coefficient) followed by an application of $t$-test (to check the significance of individual regression coefficients) with the null hypothesis that there is no association. While the above regression result may not conclusively indicate the suitability of an objective as an optimization criterion, the chosen objective functions through this methodology can definitely be utilized as potential candidates for further (empirical) validation.
 
 
-
- \section{Results}
+\section{Results}
 \label{sec:results}
 This section reports the results of our comprehensive experiments using our methodology and nine existing MSA tools listed in Table \ref{tab:msa_tools}. We start with describing our datasets. In what follows, the (best) results  of an existing MSA method/tool will indicate the results of the nine tools listed in Table \ref{tab:msa_tools}.
 
@@ -245,7 +252,7 @@ This section reports the results of our comprehensive experiments using our meth
 To conduct our study, we used a simulated dataset (100-taxon simulated dataset~\citep{liu2009rapid}) as well as two biological datasets (biological rRNA datasets~\citep{liu2009rapid} and the BAliBASE 3.0 benchmark~\citep{thompson2005balibase}). The true phylogenetic tree provided with the simulated dataset enables us to analyze whether a MO formulation is potentially application-aware and subsequently we choose two such formulations (Section~\ref{sec:selection_msa_formulation}) which resemble the training period of a supervised learning method to some extent. Afterwards, we evaluate the efficacy of the chosen formulations using biological datasets with respect to the MSA tools listed in Table \ref{tab:msa_tools}.  
 
 
-From the 100-taxon simulated dataset, we picked five random replicates. And among the biological datasets, we chose two challenging ribosomal RNA datasets along with 27 random BAliBASE instances. We describe these datasets in detail in the supplementary file (Section~\ref{sec:dataset_stat}). 
+%From the 100-taxon simulated dataset, we picked five random replicates. And among the biological datasets, we chose two challenging ribosomal RNA datasets along with 27 random BAliBASE instances. We describe these datasets in detail in the supplementary file (Section~\ref{sec:dataset_stat}). 
 
 %\subsection{Dataset statistics}
 %\label{sec:dataset_stat}
@@ -433,8 +440,9 @@ To reduce computational burden we carefully study the MO formulations from the l
 Five replicates, namely, R0, R4, R9, R14 and R19, are selected randomly for this experimentation. 
 
 
-
-To conduct multivariate linear regression analysis, we need a large pool of diverse alignments. So we run NSGA-III~\citep{deb2014evolutionary} to optimize all objectives (i.e., \{Gap, SOP, wSOP, TC\}) independently for 25 times and combine unique solutions output by each run. Figure~\ref{fig:nature_obj} in the supplementary file presents a $ 4\times4 $ scatter-plot matrix showing the pairwise relationship among all the objectives from this collection. Here we derive the following two important observations.
+To conduct multivariate linear regression analysis, we need a large pool of diverse alignments. So we run NSGA-III~\citep{deb2014evolutionary} to optimize all objectives (i.e., \{Gap, SOP, wSOP, TC\}) independently for 25 times and combine unique solutions output by each run. %Figure~\ref{fig:nature_obj} in the supplementary file presents a $ 4\times4 $ scatter-plot matrix showing the pairwise relationship among all the objectives from this collection. 
+We visualize the interrelations among the objective values of the solutions, obtained by running NSGA-III to optimizes the objective set \{Gap, SOP, wSOP, TC\} on five randomly selected replicates (R0, R4, R9, R14, R19) of 100-taxon simulated dataset, using a $ 4\times4 $ scatter-plot matrix~\cite{kalyanmoy2001multi} as shown in Figure~\ref{fig:nature_obj}. Here each diagonal cell of a matrix depicts the distribution of the values of an objective function estimated using kernel density estimation which is a non-parametric way to estimate the probability density function of a random variable. And the non-diagonal cells show the correlation between each pair of objective functions. As our evolutionary algorithms tries to minimize all objective functions, we treat the maximization objective values by multiplying with -1. In the sequel, we normalize all the objective values using min-max technique and as such the maximization objectives are turned into minimization ones.
+Here we derive the following two important observations.
 \begin{enumerate}
 	
 	\item SOP is entirely correlated with wSOP across all replicates. So optimizing both of them is redundant. Moreover, this high level of correlation causes multicollinearity, a serious trouble in regression analysis~\citep{montgomery2012introduction}. Hence, in the regression model, we will not consider this pair of objectives simultaneously.  
@@ -452,50 +460,27 @@ We see inter-dependency among the objective values. Therefore, to avoid getting 
 \end{split}
 \end{equation}
 Here $\epsilon$ is a Gaussian error component with zero mean and some fixed standard deviation. And each coefficient except $\beta_0$ (i.e., the intercept) shows the expected variation in the False Negative rate (i.e., FN rate) per unit variation in the respective objective, rest of the objectives remaining constant. That is why, $\beta_1, \beta_2$ and $\beta_3$ are termed as partial regression coefficients.  
-We learn the values of these coefficients (i.e., slopes) using the least-squares method (illustrated using Figure~\ref{fig:mul_lin_reg} in the supplementary file) based on the data (i.e, objective values and FN rates) obtained from the alignments produced by the optimizing of \{Gap, SOP, wSOP, TC\} by NSGA-III. Also, we test the significance of association by applying $t$-test on individual coefficient  $\beta_i$ (with null hypothesis $\beta_i=0$). These regression results allow us to derive two interesting points as follows.
+%We learn the values of these coefficients (i.e., slopes) using the least-squares method (illustrated using Figure~\ref{fig:mul_lin_reg} in the supplementary file) based on the data (i.e, objective values and FN rates) obtained from the alignments produced by the optimizing of \{Gap, SOP, wSOP, TC\} by NSGA-III. Also, we test the significance of association by applying $t$-test on individual coefficient  $\beta_i$ (with null hypothesis $\beta_i=0$).
+We learn the coefficients of multiple linear regression model associating FN rate with each of the objective function from \{Gap, SOP, wSOP, TC\} using least-squares method and illustrate them using partial regression plots~\citep{montgomery2012introduction} in Figure~\ref{fig:mul_lin_reg}. We apply $t$-test on individual regression coefficient (i.e., slope) $\beta_i$ (with null hypothesis $\beta_i=0$) to test the significance of that association. The test results (slope, $p$-value) are incorporated in the figure.
+ These regression results allow us to derive two interesting points as follows.
 \begin{enumerate}
 	\item Gap, SOP and wSOP exhibit better correlation with FN rate (having p-value $<$ 0.05 indicating 95\% confidence) compared to other objective functions in most of the replicates (R0, R4 and R14). So, they are expected to lead towards alignments that can yield better phylogenetic trees.
 	\item No objective shows any considerable association in case of R4 and R19 which indicates that an objective might not perform equally across different datasets. 
 \end{enumerate}
-Next we would like to assess the performance of these MO formulations in terms of FN rate. So for each bi-objective formulation, we independently run NSGA-II~\citep{deb2002fast} 20 times and infer phylogenetic trees for all generated alignments. We have presented the variation of best FN rates collected from each run in a figure in the supplementary file (Figure~\ref{fig:rank_best_fn_rate}). In what follows, We discuss some key observations:
+
+%Next we would like to assess the performance of these MO formulations in terms of FN rate. So for each bi-objective formulation, we independently run NSGA-II~\citep{deb2002fast} 20 times and infer phylogenetic trees for all generated alignments. 
+
+%We have presented the variation of best FN rates collected from each run in a figure in the supplementary file (Figure~\ref{fig:rank_best_fn_rate}). 
+
+Next we would like to measure the strength of each bi-objective formulation based on the FN rate achieved by its generated solution set. To accomplish this, for each formulation, we run NSGA-II~\citep{deb2002fast} for 20 times following the standard practice of operations research (OR) literature (due to the stochastic nature of metaheuristics). Each run generates a set of solutions that represents the trade-offs in satisfying all objectives. Afterwards, we inferred ML tree for each of the generated alignment. We collected the best FN rates from each of the 20 solution sets and describe the distribution of these FN rates using boxplots which are shown in Figure~\ref{fig:rank_best_fn_rate}. In these boxplots we also incorporate the FN rates achieved by the state-of-the-art tools for comparison using horizontal lines.
+
+In what follows, We discuss some key observations:
 \begin{enumerate}
 	\item Naturally giving more objectives to an MO metaheuristics increase its probability of finding the best solution. So we see that the unified formulation \{TC, Gap, SOP, wSOP\} often shows superior performance over the bi-objective formulations. However, in this chapter, we have preferred smaller MO formulations to reduce the overall complexity.
 \item \{Gap, SOP\} achieves better FN rates compared to other bi-objective formulations. And its performance is very close to \{TC, Gap, SOP, wSOP\}. This finding conforms the outcome of our regression analysis pointed before.
 	\item Both \{Gap, SOP\} and \{TC, Gap, SOP, wSOP\} can consistently outperform the state of the art tools in terms of FN rate.
 \end{enumerate}
 Based on our experimental results presented above, we can rate \{Gap, SOP\} as the most appropriate among our pre-selected formulations from literature. 
-
-
-\subsubsection{Selecting a new formulation}
-\label{sec:new_msa_formulation}
-From the results discussed so far, one may assume that an objective is more desirable if it exhibits a better correlation with the corresponding FN rate.  
-So, we try to form a new objective set as follows. As detailed in Section~\ref{sec:formulation}), firstly, we propose four new objective functions, namely, Entropy, SimG, SimNG and GapCon, each of which, quantifies one particular aspect of MSA. We now run NSGA-III in order to optimize the combined objective set, \{Entropy, TC, Gap, SimG, SimNG, GapCon\} (i.e., we include TC and Gap as well), for 40 times thereby generating numerous diverse alignments.
-We then employ multivariate linear regression to analyze and assess the correlations between our proposed objective functions and corresponding FN rates (please check Figure~\ref{fig:new_nature_obj} in the supplementary file for a visualization). In what follows we present our key observations in this regard.
-\begin{itemize}
-	\item Entropy is strongly correlated with SimG which poses an issue in our multiple regression analysis. Therefore, these two objectives should not remain together in our in our regression model; nor should they be combined in the MO formulation.
-	
-	\item We witness a conflicting relationship between SimG and SimNG. Therefore, through a simultaneous optimization of these two objectives, a MO metaheuristic can expect to generate a (large) number of alignments that are diverse.
-\end{itemize}
-
-Now we use the following model to express as well as capture the relationship between the proposed objective functions and the corresponding FN rates:
-\begin{equation}
-\small
-\begin{split}
-\text{FN rate} = \beta_0 + \beta_1 \times \text{SimNG}+ \beta_2 \times \text{GapCon} + 
-\beta_3 \times \text{SimG (or Entropy)} + \epsilon \label{eq:new_multi_lin_reg}
-\end{split}
-\end{equation}
-Now, the regression coefficients are estimated by fitting the model of Equation \ref{eq:new_multi_lin_reg} to the data (i.e., objective values and FN rates) obtained from a diverse collection of alignments generated by optimizing \{Entropy, TC, Gap, SimG, SimNG, GapCon\}, i.e., the combined objective set. In the sequel, we notice that, both SimG and SimNG exhibit a positive correlation with FN rate. Hence, the objective set \{SimG, SimNG\} is chosen. In the supplementary file, we have presented a visualization using partial regression plots (Figure~\ref{fig:new_mul_lin_reg}).
-
-
-\subsubsection{Selection mechanism}%{Selection of appropriate multi-objective formulations}
-\textit{(The following should be read in conjunction with the description presented in Section~\ref{sec:selection_msa_formulation} of the main text)} 
-
-We visualize the interrelations among the objective values of the solutions, obtained by running NSGA-III to optimizes the objective set \{Gap, SOP, wSOP, TC\} on five randomly selected replicates (R0, R4, R9, R14, R19) of 100-taxon simulated dataset, using a $ 4\times4 $ scatter-plot matrix~\cite{kalyanmoy2001multi} as shown in Figure~\ref{fig:nature_obj}. Here each diagonal cell of a matrix depicts the distribution of the values of an objective function estimated using kernel density estimation which is a non-parametric way to estimate the probability density function of a random variable. And the non-diagonal cells show the correlation between each pair of objective functions. As our evolutionary algorithms tries to minimize all objective functions, we treat the maximization objective values by multiplying with -1. In the sequel, we normalize all the objective values using min-max technique and as such the maximization objectives are turned into minimization ones.
-
-We estimate the coefficients of multiple linear regression model associating FN rate with each of the objective function from \{Gap, SOP, wSOP, TC\} using least-squares method and illustrate them using partial regression plots~\citep{montgomery2012introduction} in Figure~\ref{fig:mul_lin_reg}. We apply $t$-test on individual regression coefficient (i.e., slope) $\beta_i$ (with null hypothesis $\beta_i=0$) to test the significance of that association. The test results (slope, $p$-value) are incorporated in the figure.
-
-We measure the strength of each objective set based on the FN rate achieved by the members of generated solution set. To accomplish this, For each set of objective functions, we run NSGA-II~\citep{deb2002fast} for 20 times following the standard practice of operations research (OR) literature (due to the stochastic nature of metaheuristics). Each run generates a set of solutions that represents the trade-offs in satisfying all objectives. Afterwards, we inferred ML tree for each of the generated alignment. We collected the best FN rates from each of the 20 solution sets and describe the distribution of these FN rates using boxplots which are shown in Figure~\ref{fig:rank_best_fn_rate}. In these boxplots we also incorporate the FN rates achieved by the state-of-the-art tools for comparison using horizontal lines.
 
 \begin{figure*}[!htbp]	
 	\begin{adjustwidth}{-1cm}{-1cm}
@@ -605,6 +590,28 @@ We measure the strength of each objective set based on the FN rate achieved by t
 	\label{fig:rank_best_fn_rate}
 	%	\end{adjustwidth}
 \end{figure*}
+
+\subsubsection{Selecting a new formulation}
+\label{sec:new_msa_formulation}
+From the results discussed so far, one may assume that an objective is more desirable if it exhibits a better correlation with the corresponding FN rate.  
+So, we try to form a new objective set as follows. As detailed in Section~\ref{sec:formulation}), firstly, we propose four new objective functions, namely, Entropy, SimG, SimNG and GapCon, each of which, quantifies one particular aspect of MSA. We now run NSGA-III in order to optimize the combined objective set, \{Entropy, TC, Gap, SimG, SimNG, GapCon\} (i.e., we include TC and Gap as well), for 40 times thereby generating numerous diverse alignments.
+
+We then employ multivariate linear regression to analyze and assess the correlations between our proposed objective functions and corresponding FN rates (please see Figure~\ref{fig:new_nature_obj} for a visualization). In what follows we present our key observations in this regard.
+\begin{itemize}
+	\item Entropy is strongly correlated with SimG which poses an issue in our multiple regression analysis. Therefore, these two objectives should not remain together in our in our regression model; nor should they be combined in the MO formulation.
+	
+	\item We witness a conflicting relationship between SimG and SimNG. Therefore, through a simultaneous optimization of these two objectives, a MO metaheuristic can expect to generate a (large) number of alignments that are diverse.
+\end{itemize}
+
+Now we use the following model to express as well as capture the relationship between the proposed objective functions and the corresponding FN rates:
+\begin{equation}
+\small
+\begin{split}
+\text{FN rate} = \beta_0 + \beta_1 \times \text{SimNG}+ \beta_2 \times \text{GapCon} + 
+\beta_3 \times \text{SimG (or Entropy)} + \epsilon \label{eq:new_multi_lin_reg}
+\end{split}
+\end{equation}
+Now, the regression coefficients are estimated by fitting the model of Equation \ref{eq:new_multi_lin_reg} to the data (i.e., objective values and FN rates) obtained from a diverse collection of alignments generated by optimizing \{Entropy, TC, Gap, SimG, SimNG, GapCon\}, i.e., the combined objective set. In the sequel, we notice that, both SimG and SimNG exhibit a positive correlation with FN rate. Hence, the objective set \{SimG, SimNG\} is chosen. We have presented a visualization using partial regression plots in Figure~\ref{fig:new_mul_lin_reg}.
 
 
 \begin{figure*}[!htbp]	
@@ -955,13 +962,13 @@ Contrastingly however, these alignments have produced better phylogenetic trees 
 \end{figure*}
 \subsubsection{Results on BAliBASE datasets}
 We performed 20 repeated runs of NSGA-II on 27 random instances of BAliBASE 3.0. Once again we analyze obtained solutions in terms of the quality measures of alignments and phylogenetic trees and observe that the better alignments according to popular alignment measures, do not necessarily yield better phylogenetic trees.
-Due to space constraints, we present our core observations on four instances (BB11018, BB11005, BB11033 \& BB11020 ) under RV11 group in Figures \ref{fig:rv11_fn_rate_tc_sp} and \ref{fig:rv11_tc_sp}. We obtained similar results for the remaining groups (RV12 to RV50) (please see Section~\ref{sec:result_balibase} in the supplementary file). Figure \ref{fig:rv11_fn_rate_tc_sp}) summarizes our findings based on FN rate. If we check the Top panel (part (a) - (h)), we find that, throughout all the instances, the solutions generated by the two objective sets are either better or at least equivalent when compared to the solutions generated by the best tool.  
+Due to space constraints, we present our core observations on four instances (BB11018, BB11005, BB11033 \& BB11020 ) under RV11 group in Figures \ref{fig:rv11_fn_rate_tc_sp} and \ref{fig:rv11_tc_sp}. We obtained similar results for the remaining groups (RV12 to RV50) (please see Appendix~\ref{apendix:cyb}). Figure \ref{fig:rv11_fn_rate_tc_sp}) summarizes our findings based on FN rate. If we check the Top panel (part (a) - (h)), we find that, throughout all the instances, the solutions generated by the two objective sets are either better or at least equivalent when compared to the solutions generated by the best tool.  
 For BB11020, the objective set \{SimG, SimNG\} achieves 12\% FN rate as opposed to 50\%, achieved by the best tool- clearly, a huge improvement. In terms of TC score however, the two objective sets have been able to outperform all the tools only for BB11020 (part (a) - part (h) of Figure \ref{fig:rv11_tc_sp}), which is conflicting with our findings in terms of the FN rate. So again we witness the discrepancy between TC score and FN rate illustrated in part (i) - part (l) of Figure~\ref{fig:rv11_fn_rate_tc_sp}. On the other hand, Figure \ref{fig:rv11_tc_sp} depicts the results based on SP and TC scores. If we observe its Panel 1 (part (i) - (p)), we see similar disagreement between SP score and FN rate depicted in part (m) - part (p) of Figure~\ref{fig:rv11_fn_rate_tc_sp}. It is clearly evident from these figures that the best TC and/or SP scores may not necessarily imply the best FN rates. This phenomenon is also observed quite consistently across rest of the instances. This finding may be of vital importance for researchers and practitioners, who leverage MSA methods in phylogenetic applications, 
 
 \begin{table*}[!h]
 	\scriptsize
 	\centering
-	\caption{Friedman test and Holm's post-hoc procedure. \underline{Friedman's rank (Column 2):} Average rank (lower rank indicates better) of the MSA approaches. \underline{Holm's adjusted $p$-values (Columns 3, 4 and 5):} Significance of difference between the metaheuristics and the MSA methods.}
+	\caption[Friedman test and Holm's post-hoc procedure to assess the significance of improvement achieved by MO approach over existing methods.]{Friedman test and Holm's post-hoc procedure. \underline{Friedman's rank (Column 2):} Average rank (lower rank indicates better) of the MSA approaches. \underline{Holm's adjusted $p$-values (Columns 3, 4 and 5):} Significance of difference between the metaheuristics and the MSA methods.}
 	\begin{tabular}{|l|r||c|c|c|}
 		\hline
 		\multicolumn{1}{|c|}{1} & \multicolumn{1}{c||}{2} & 3     & 4     & 5 \\
@@ -1001,7 +1008,7 @@ For BB11020, the objective set \{SimG, SimNG\} achieves 12\% FN rate as opposed 
 
 
 
-Table~\ref{tab:balibase_good_solutions} shows a comparison of the averaged 100 FN rates yielded through a single execution of NSGA-II by optimizing the formulation, \{Gap, SOP\} against the existing MSA methods in terms of FN rate for the BAliBASE datasets. It shows that, on most of the cases, the MO approach can yield better phylogenetic trees than all MSA methods. As an illustration, for BB20010 we show the true tree and the most accurate estimated trees yielded by the two selected MO formulations and FSA (performed best among the nine MSA methods) in Figure~\ref{fig:bb20010_trees}. We further conducted a comparative analysis between NSGA-II and MOEA/D while optimizing \{SimG, SimNG\}. However, due to space constraints, the results are reported in Table~\ref{tab:balibase_good_solutions_simg_simng} and ~\ref{tab:superior_solutions} of the supplementary file.
+Table~\ref{tab:balibase_good_solutions} shows a comparison of the averaged 100 FN rates yielded through a single execution of NSGA-II by optimizing the formulation, \{Gap, SOP\} against the existing MSA methods in terms of FN rate for the BAliBASE datasets. It shows that, on most of the cases, the MO approach can yield better phylogenetic trees than all MSA methods. As an illustration, for BB20010 we show the true tree and the most accurate estimated trees yielded by the two selected MO formulations and FSA (performed best among the nine MSA methods) in Figure~\ref{fig:bb20010_trees}. We further conducted a comparative analysis between NSGA-II and MOEA/D while optimizing \{SimG, SimNG\}. However, due to space constraints, the results are reported in Table~\ref{tab:balibase_good_solutions_simg_simng} and ~\ref{tab:superior_solutions} of Appendix~\ref{apendix:cyb}.
 
 
 
@@ -1037,7 +1044,7 @@ These values show that the observed difference (i.e., improved FN rates) between
 	\label{tab:insight_group}%
 \end{table}%
 
-\subsection{Biological Perspective}\label{sec:discussion}
+\subsection{Biological Perspective}\label{sec:cyb-biology-discussion}
 % Table generated by Excel2LaTeX from sheet 'Sheet1'
 Here we attempt to characterize the overall performance of our proposed methodology using a biological perspective. To accomplish this, using the values reported in Table~\ref{tab:superior_solutions}, we systematically score the overall performance (worst: 0, best: 10) of our approach on a particular dataset. Then we categorize 27 biological instances of BAliBASE benchmark into different groups based on following biological criteria further analyze the performance of our approach.
 \begin{itemize}
@@ -1167,7 +1174,7 @@ Informatively, we ran the multi-objective metaheuristics on a server with Intel(
 
 
 \section{Discussion}
-\label{sec:discussion}
+\label{sec:cyb-final-discussion}
 In this chapter, we introduced a phylogeny-aware multi-objective optimization approach to compute MSA with an ultimate goal to infer the phylogenetic tree from the resultant alignments. To optimize MSA, we proposed two simple objective functions in addition to the existing ones. We judged the potential capability of each objective function to yield better trees by employing domain knowledge as well as by applying statistical approaches. We employed multiple linear regression to measure the degree of association between the individual objective functions and the quality of inferred phylogenetic tree (i.e., FN rate). Thus, we provide empirical justification to choose two multi-objective formulations to move forward. Afterwards, we performed extensive experimentation with both simulated and biological datasets to demonstrate the benefit of our approach. We showed that the simultaneous optimization of a set of phylogeny-aware objective functions can lead to phylogenetic trees with improved accuracy than that of the state-of-the-art MSA tools. From this finding, we would like to hypothesize that, the use of domain specific measures can aid an MSA methods in other application domain as well.
 
 Standard criteria (SP-score, TC-score, etc.) for assessing alignment quality are usually based on shared homology pairs (SP score) or identical columns (TC score), and do not explicitly consider a particular application domain. Mistakes in alignments that are not important with respect to an application domain may not impact the ultimate accuracy of that particular inference. For example, not all sites are significant with respect to protein structure and function prediction, and hence multiple alignments with different accuracy may lead to the same predictions~\citep{warnow2013large}. Similarly, in the context of phylogeny estimation, alignments with substantially different SP scores may lead to trees with the same accuracy~\citep{liu2009rapid}. In this chapter, we systematically investigate the impact of evaluation criteria of an alignment on phylogenetic tree inference problem. Our results suggest that it could be possible to develop improved MSA methods for phylogenetic analysis by carefully choosing appropriate objective functions. Moreover, in almost all existing studies on MSA, we find the researchers evaluating the effectiveness of MSA methods using some generic alignment quality measures (i.e., TC score, SP score). Contrastingly, our results revealed that optimizing those widely used measures do not necessarily lead us to the best phylogenetic tree. This finding could be an eye opener for the researchers who need to use MSA methods to address a particular application. 
@@ -1180,7 +1187,7 @@ We performed an extensive experimental study comprising 29 datasets of varying s
 
 Formulating phylogeny-aware multi-objective formulation (application specific evaluation criteria in general) cannot be developed entirely in one study; it should evolve in response to scientific findings and systematists' feedback. This requires active involvement of evolutionary biologists, computer scientists, systematists, and others -- leading to improved understandings of alignments and how they are related to various fields in comparative genomics.
 
- \section{Conclusion} \label{sec:discussion}
+ \section{Conclusion} \label{sec:cyb-conclusion}
 In this chapter we developed an application-oriented MO approach for computing MSAs for the purpose of phylogeny inference with the help of statistical techniques and domain knowledge. In addition to the existing objective functions for MSA, we introduced four simple ones. 
 We applied multivariate linear regression in order to learn how an an individual objective function correlates with the FN rate, i.e., the fitness of the estimated phylogenetic tree. Thereby, we select two appropriate bi-objective formulations to move forward through empirical justification. Finally, by experimenting with simulated and biological datasets, we demonstrate that an application-aware MO formulation of MSA can guide us to improved phylogenetic trees compared to the existing MSA tools. This finding allow us to speculate that, domain-specific metrics can assist MSA methods for other application purposes also. 
 

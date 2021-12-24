@@ -3,34 +3,40 @@
 
 \chapter{MAMMLE: phylogeny estimation based on \underline{m}ultiobjective \underline{a}pplication-aware \underline{M}USCLE and \underline{m}aximum \underline{l}ikelihood \underline{e}nsemble} \label{ch:mammle}
 
-%\begin{abstract}
 
-In the previous chapter, we developed the PMAO framework by embedding four application-aware objectives into PASTA to generate high-quality phylogenetic tree.
-%Phylogenetic trees are often inferred from a multiple sequence alignment (MSA) where the tree accuracy is heavily impacted by the nature of estimated alignment. 
-MUSCLE is a general-purpose MSA tool widely used for its high throughput and accuracy. Carefully equipping MUSCLE with multiple application-aware objectives positively impacts its capability to yield better trees. In this chapter, we introduce MAMMLE, a framework for inferring better phylogenetic trees from unaligned sequences by hybridizing MUSCLE with multiobjective optimization strategy and leveraging multiple Maximum Likelihood hypotheses. MAMMLE may offer a significant improvement (upto 27\% in our experiments) in tree accuracy over MUSCLE.
+In the previous chapter, we developed the PMAO framework by embedding four application-aware objectives into PASTA to generate a high-quality phylogenetic tree.
+Please recall that a phylogenetic trees is usually inferred from a multiple sequence alignment (MSA) where the tree accuracy is heavily impacted by the nature of estimated alignment. 
+MUSCLE is a general-purpose MSA tool widely used for its high throughput and accuracy. Carefully equipping MUSCLE with multiple application-aware objective functions positively impacts its capability to yield better trees. In this chapter, we introduce MAMMLE, a framework for inferring better phylogenetic trees from unaligned sequences by hybridizing MUSCLE with a multi-objective optimization strategy and leveraging multiple Maximum Likelihood hypotheses. MAMMLE may offer a significant improvement (upto 27\% in our experiments) in tree accuracy over MUSCLE.
 We provide the Linux and Mac OS X implementation of MAMMLE as an Open Source tool at \url{https://github.com/ali-nayeem/mammle}
 
-%\section{Contact:} \href{ali\_nayeem@cse.buet.ac.bd}{ali\_nayeem@cse.buet.ac.bd}
-%\end{abstract}
-%\vspace{-7 mm}
 \section{Introduction}
-Maximum likelihood (ML) is a statistical method for inferring high quality phylogenetic trees. ML trees are estimated on multiple sequence alignments (MSA). The characteristics of the estimated MSA dramatically influences the tree accuracy. Besides phylogeny estimation, MSA has other important biological applications, such as, prediction of structure/function of new proteins, identification of conserved regions, etc. Thus an MSA tool that is aware of its intended usage (i.e., phylogeny estimation in our case) is expected to yield output of higher quality as opposed to general-purpose MSA tools (\cite{nayeem2020multiobjective}).  
+Maximum likelihood (ML) is a statistical method for inferring high quality phylogenetic trees. ML trees are estimated on multiple sequence alignments (MSA). ML tree estimation comprises two phases, namely, (A) the computation of an MSA, and subsequently (B) the inference of a tree therefrom. The characteristics of the MSA obtained in Phase A dramatically influence the accuracy of Phase B. Thus an MSA tool that is aware of its intended usage (i.e., phylogeny estimation in our case) is expected to yield output of higher quality which we empirically verified in Chapter~\ref{ch:cybernatics}.
+%The characteristics of the estimated MSA dramatically influences the tree accuracy. 
 
-MUSCLE (\cite{edgar2004muscle}) is one of the most widely-used MSA methods cited by around ten new papers every day (\cite{muscle-web}). It performs progressive alignment and then iteratively refines the estimated MSA based on the popular SP (sum-of-pairs) score as the objective function. \cite{nayeem2020multiobjective} developed a systematic method to identify application-aware MSA objective functions based on their correlation to the tree accuracy. It was subsequently shown, through extensive experiments, that optimizing those objectives by multiobjective (MO) techniques can yield high-quality ML trees. An MO approach treats all objectives (usually conflicting) equally and generates a set of non-dominated Pareto-optimal solutions that are equivalent in the context of conflicting objectives. 
+Please recall that, a huge number of MSA methods are available in the literature. We can broadly divide those into three categories: progressive, consistency-based, and iterative. This division is not exclusive as many tools also use a combination of these techniques. Among them the most flexible are the iterative methods (e.g., SAT\'e~\cite{liu2009rapid}, SAT\'e-II~\cite{liu2012sate}, PASTA~\cite{mirarab2015pasta}). They can fix errors made in the earlier stages of computation by repeating some steps until an optimization criterion or objective function, quantifying the quality of the (re)alignment, converges. Due to such an advantage, progressive (e.g., MUSCLE~\cite{edgar2004muscle}, MAFFT~\cite{katoh2002mafft}, etc.) and consistency-based (e.g., T-COFFEE~\cite{notredame2000t}, ProbCons~\cite{do2005probcons}, etc) methods also employ a iterative refinement phase at the end of their pipelines. Notably, various objectives (e.g., sum-of-pairs measure and its weighted variants, consistency score, etc.) have been used in the literature for iterative improvement of MSAs.
 
-Here, we present MAMMLE, a framework through which we infuse the concept of MO application-awareness into MUSCLE by incorporating four application-aware objectives from \cite{nayeem2020multiobjective} within the iterative refinement phase thereof through an MO strategy. MAMMLE generates multiple alternative alignments and for each of them an ML tree is inferred. We take these multiple hypotheses into our advantage and develop an ensemble approach for producing a better phylogenetic tree. We present our overall approach for phylogeny estimation from unaligned sequences as a flexible framework whose components can potentially be modified, replaced or further refined by bioinformatics researchers and practitioners.
+ 
+
+The efficacy of using several different objective functions to compare candidate MSAs persuaded researchers (\cite{da2010alineaga, ortuno2013optimizing, soto2014multi, abbasi2015local, rubio2016hybrid, zambrano2017comparing, rubio2018characteristic, benitez2020sequoya}) to employ multi-objective (MO) optimization. We were motivated to explore such an approach due to the fact that the alignment optimized under one objective may be different from the alignments generated under other objectives, inferring discordant homologies relating to the sequences under consideration. MO optimization can address this issue by optimizing multiple conflicting objectives simultaneously to
+generate a set of alternative alignments. Also, as no single objective is biologically guaranteed to lead to the most accurate solution, the argument of combining alternative criteria seems reasonable. However, such an approach needs to be backed by the choice of appropriate objective functions and performance measures that are not addressed in the existing MO literature on MSA as we already discussed in Chapter~\ref{ch:cybernatics}. 
+
+Besides phylogeny estimation, MSA has other important biological applications, such as, prediction of structure/function of new proteins, identification of conserved regions, etc. Traditionally, the MSA methods are benchmarked based on two alignment quality metrics: SP-score and TC-score~\cite{warnow2017computational}. These measures compare the estimated alignment to the reference alignment (i.e., the ground truth). In Chapter~\ref{ch:cybernatics}, we argued with experimental evidence that such generic measures might not be adequate to choose the best MSA method to perform a specific biological task (e.g., protein structure prediction, phylogeny estimation, etc.). Instead, we proposed applying a domain-specific measure that can potentially capture to what extent the output can serve the actual purpose. Taking phylogeny estimation as the intended application, we demonstrated the advantages of using tree quality for performance evaluation instead of traditional measures. We developed a systematic method to identify application-aware objective functions based on their correlation to the tree quality. It was subsequently shown, through extensive experiments, that optimizing those objectives by MO techniques can yield high-quality phylogenetic trees. Thus an MSA tool that is aware of its intended usage (i.e., phylogeny estimation in our case) is expected to yield output of higher quality as opposed to general-purpose MSA tools as we demonstrated in Chapter~\ref{ch:cybernatics}. 
+
+MUSCLE (\cite{edgar2004muscle}) is one of the most widely-used MSA methods cited by around ten new papers every day (\cite{muscle-web}). It performs progressive alignment and then iteratively refines the estimated MSA based on the popular SP (sum-of-pairs) score as the objective function. In Chapter~\ref{ch:cybernatics}, we developed a systematic method to identify application-aware MSA objective functions based on their correlation to the tree accuracy. It was subsequently shown, through extensive experiments, that optimizing those objectives by multi-objective (MO) techniques can yield high-quality ML trees. An MO approach treats all objectives (usually conflicting) equally and generates a set of non-dominated Pareto-optimal solutions that are equivalent in the context of conflicting objectives. 
+
+Here, we present MAMMLE, a framework through which we infuse the concept of MO application-awareness into MUSCLE by incorporating four application-aware objectives from Chapter~\ref{ch:cybernatics} within the iterative refinement phase thereof through an MO strategy. MAMMLE generates multiple alternative alignments and for each of them an ML tree is inferred. We take these multiple hypotheses into our advantage and develop an ensemble approach for producing a better phylogenetic tree. We present our overall approach for phylogeny estimation from unaligned sequences as a flexible framework whose components can potentially be modified, replaced or further refined by bioinformatics researchers and practitioners.
 
 \begin{figure}[!htbp]
 	\centering
-	\includegraphics[width=0.8\textwidth]{Figure/workflow.pdf}
-	\caption{Simplified workflow of MAMMLE framework.}
+	\includegraphics[width=0.9\textwidth]{Figure/workflow.pdf}
+	\caption{Simplified pipeline of MAMMLE framework. The components marked with a blue shade can potentially be modified, replaced, or further refined by bioinformatics researchers and practitioners.}
 	\label{fig:workflow}
 \end{figure}
 %\vspace{-12 mm}
 
 \section{Methods}
 The phylogenetic reconstruction pipeline of MAMMLE is illustrate in Figure~\ref{fig:workflow}. The components open to modification are marked with a blue shade. It starts by feeding the unaligned sequences to the system, which simultaneously optimizes four application-aware objectives with the help of $N$ well-distributed 4D weight vectors given as input and generate $N$ (in this article $N=30$) alternative alignments (please refer to Section~\ref{sec:ma-muscle} for details). %We choose to work with MUSCLE due to its simplicity and efficacy. %Although we use MUSCLE in this article due to its simplicity and efficacy, it can be replaced by other iterative MSA methods. 
-Next, MAMMLE infers a ML tree from each of the $N$ alignments using FastTree (\cite{price2010fasttree}). We prefer FastTree over other ML methods due to its speed. Finally, MAMMLE summarizes the $N$ ML trees using a simple greedy consensus method of PAUP* (Phylogenetic Analysis Using PAUP) available at \url{https://paup.phylosolutions.com}. Any tree summarizing approach can be employed here. Note that MAMMLE relieves the user from parameter tuning through its well-spaced weight vectors and thus we used default parameter settings of MUSCLE and FastTree. 
+Next, MAMMLE infers a ML tree from each of the $N$ alignments using FastTree (\cite{price2010fasttree}). We prefer FastTree over other ML methods due to its speed. Finally, MAMMLE summarizes the $N$ ML trees using a simple greedy consensus method of PAUP* (Phylogenetic Analysis Using PAUP) available at \url{https://paup.phylosolutions.com}. Any tree summarizing approach can be employed here. Note that MAMMLE relieves the user from parameter tuning through its well-spaced weight vectors and thus we used default parameter settings of MUSCLE and FastTree. The important components are further discussed in subsequent sections.
 
 %\vspace{-4 mm}
 
@@ -38,7 +44,7 @@ Next, MAMMLE infers a ML tree from each of the $N$ alignments using FastTree (\c
 \subsection{Multiobjective Application-aware MUSCLE} \label{sec:ma-muscle}
 
 \subsubsection{Application-aware objective functions}
-To design multiobjective application-aware MUSCLE, we embed the following four simple objective functions, identified by~\cite{nayeem2020multiobjective} based on their better correlation to the tree accuracy, within the iterative refine phase of MUSCLE. Several pairs of these objectives may have conflicting relationship~\cite{nayeem2020multiobjective}.  
+To design multi-objective application-aware MUSCLE, we embed the following four simple objective functions, identified in Chapter~\ref{ch:cybernatics} based on their better correlation to the tree accuracy, within the iterative refine phase of MUSCLE. Several pairs of these objectives may have conflicting relationship (please see Chapter~\ref{ch:cybernatics}).  
 \begin{enumerate}
 	\item Maximize similarity for columns containing gaps (SIMG): For each column of the MSA having at least one gap, it calculates the ratio of the most frequent characters. Then all those ratios are added to get the SIMG score.
 	\item Maximize similarity for columns containing no gaps (SIMNG): This is similar to SIMG except that it considers those columns of the MSA that do not have any gap.
@@ -48,14 +54,14 @@ To design multiobjective application-aware MUSCLE, we embed the following four s
 
 
 \subsubsection{Multiobjective principles}
-The goal of an multiobjective (MO) algorithm is to generate a set of solutions, popularly known as the Pareto-optimal solutions in the MO literature, which represent the best compromise among the (conflicting) objectives. 
+The goal of an multi-objective (MO) algorithm is to generate a set of solutions, popularly known as the Pareto-optimal solutions in the MO literature, which represent the best compromise among the (conflicting) objectives. 
 %In the MO literature, these solutions are popularly said to constitute the Pareto front of the solution space. 
 Among the several classes of MO algorithms (e.g., pareto-based, decomposition-based, indicator-based, etc.), decomposition-based strategies are found effective to face the difficulties in handling `many' (i.e., more than three) objectives~\cite{li2015many}. These algorithms decompose the task of generating several alternative solutions into many single-objective problems with the help of a set of well-distributed weight vectors, popularly known as reference directions. Each weight vector aggregates the different objective scores into a single value that eventually leads to one member of the final solution set.
 
 \begin{figure}[!htbp]
 	\centering
-	\includegraphics[width=0.7\textwidth]{Figure/ma-muscle}
-	\caption{High-level workflow of multiobjective application-aware MUSCLE for a single weight vector. Steps (3.4 to 3.6) added/modified on the original MUSCLE are marked with red color. This figure is modification of the original image taken from~\cite{edgar2004muscle}.}
+	\includegraphics[width=0.9\textwidth]{Figure/ma-muscle}
+	\caption{High-level workflow of multi-objective application-aware MUSCLE for a single weight vector. Steps (3.4 to 3.6) added/modified on the original MUSCLE are marked with red color. This figure is modification of the original image taken from~\cite{edgar2004muscle}.}
 	\label{fig:ma-muscle}
 \end{figure}
 
@@ -76,49 +82,27 @@ Although working with a higher number of weight vectors increase the chance of g
 	%\end{adjustwidth}
 \end{figure}
 
+\subsection{Greedy Consensus}
 
-
+Greedy consensus of a set of given trees is constructed by sequentially
+adding one clade at a time, the most frequently occurring clade that is compatible with clades already included
+in the greedy consensus tree breaking ties randomly if necessary.
+This process
+ends when the parietal being constructed is fully resolved which is also known as a bifurcating tree. 
+Greedy consensus tree is also known ``majority rule extended''~\cite{phylip}, and  implemented in PAUP*~\cite{swofford_paup*_2002}. 
 
 \subsection{Tree Accuracy Measure} 
 We evaluate the accuracy of each estimated phylogenetic tree with respect to the reference phylogenetic tree using a widely used measure known as the False Negative (FN) rate. FN rate is the percentage of edges present in the true tree but missing in the estimated tree. So a small value of FN rate is desirable. Although there are two more common tree error measures (False Positive (FP rate) and and Robinson-Foulds (RF) rate), all of them are identical when true and estimated trees are binary~\citep{warnow2017computational}. In this thesis we worked with binary trees only. %as a quality measure, 
 
-%% Table generated by Excel2LaTeX from sheet 'small latex table'
-%\begin{table}[htbp]
-%	\centering
-%	\caption{Selected values of XGBoost's important hyperparameters.}
-%	\begin{tabular}{l|r}
-%		Hyperparameter & \multicolumn{1}{l}{Value} \\
-%		\hline
-%		Number of trees & 200 \\
-%		\hline
-%		Maximum depth of a tree & 5 \\
-%		\hline
-%		Learning rate & 0.25 \\
-%		\hline
-%		Fraction of features used per tree & 0.5 \\
-%	\end{tabular}%
-%	\label{tab:hyperparameter}%
-%\end{table}%
+\subsection{Datasets}
+We conduct our experiments on the BAliBASE 3.0 benchmark~\cite{thompson2005balibase} which is considered to be the de facto standard for biological alignment database of protein families. It provides manually refined reference alignments of high quality based on 3D structural superposition. It has 218 datasets which are organized into six groups according to their families and similarities: RV11 (very divergent sequences, residue identity below 20\%), RV12 (medium to divergent sequences, 20\%-40\% residue identity), RV20 (families with one or more highly divergent sequences), RV30 (divergent subfamilies), RV40 (sequences with large terminal N/C extensions), and RV50 (sequences with large internal insertions). 
 
-%\vspace{-12 mm}
+As we adopt the FN rate as our domain-specific performance measure, following the strategy of~\cite{mirarab2015pasta} we generate a reference tree for each dataset by inferring an ML tree from the reference alignments using RAxML~\cite{stamatakis2014raxml} with bootstrap analysis and retaining only the highly supported edges.
 
-\begin{figure}[!htbp]%
-	\begin{adjustwidth}{-1.1cm}{}
-		\centering
-		\begin{subfigure}{0.30\textwidth} \includegraphics[width=\textwidth]{Figure/comparison} \caption{FN rate distribution} \label{fig:boxplot} \end{subfigure}
-		\begin{subfigure}{0.30\textwidth} \includegraphics[width=\textwidth]{Figure/delta3} \caption{MAMMLE: FN rate improvement}\label{fig:scatter}\end{subfigure}
-		\begin{subfigure}{0.40\textwidth} \includegraphics[width=\textwidth]{Figure/delta5} \caption{Individual FN rate: MUSCLE vs MAMMLE}\label{fig:scatter_fn}\end{subfigure}
-		%		\subfloat[FN rate distribution]{\label{fig:boxplot}\includegraphics[width=0.25\textwidth]{comparison}}%
-		%		\subfloat[MAMMLE: FN rate improvement]{\label{fig:scatter}\includegraphics[width=0.25\textwidth]{delta3}}
-		%		
-		%		\subfloat[Individual FN rate: MUSCLE vs MAMMLE]{\label{fig:scatter_fn}\includegraphics[width=0.35\textwidth]{delta5}}
-	\end{adjustwidth}
-	\caption{Close examination of MAMMLE vs MUSCLE.}
-	\label{fig:mammle-result}
-\end{figure}
+
 
 \section{Results and discussion }
-We compared MAMMLE with MUSCLE (with FastTree) on the most widely-used BAliBASE 3.0 benchmark (\cite{thompson2005balibase}) of protein families using the FN rate (percentage of true tree edges missing in the estimated tree) as the accuracy measure. Following \cite{mirarab2015pasta}, we avoid the instances with a lower number (i.e., below 11) of sequences and generate a reference tree for 147 considered instances by RAxML (\cite{stamatakis2014raxml}) bootstrap analysis on the reference alignment.
+We compared MAMMLE with MUSCLE (with FastTree) on the most widely-used BAliBASE 3.0 benchmark (\cite{thompson2005balibase}) of protein families using the FN rate (percentage of true tree edges missing in the estimated tree) as the accuracy measure. Following the principles used by~\cite{mirarab2015pasta}, we avoid the instances with a lower number (i.e., below 11) of sequences. % and generate a reference tree for 147 considered instances by RAxML (\cite{stamatakis2014raxml}) bootstrap analysis on the reference alignment.
 
 %\section{Dataset} 
 % Table generated by Excel2LaTeX from sheet 'mammle'
@@ -146,6 +130,17 @@ We compared MAMMLE with MUSCLE (with FastTree) on the most widely-used BAliBASE 
 	\label{tab:data-size}%
 \end{table}%
 
+\begin{figure}[!htbp]%
+	\begin{adjustwidth}{-1.1cm}{}
+		\centering
+		\begin{subfigure}{0.50\textwidth} \includegraphics[width=\textwidth]{Figure/comparison} \caption{FN rate distribution} \label{fig:boxplot} \end{subfigure}
+		\begin{subfigure}{0.50\textwidth} \includegraphics[width=\textwidth]{Figure/delta3} \caption{MAMMLE: FN rate improvement}\label{fig:scatter}\end{subfigure}
+		\begin{subfigure}{0.60\textwidth} \includegraphics[width=\textwidth]{Figure/delta5} \caption{Individual FN rate: MUSCLE vs MAMMLE}\label{fig:scatter_fn}\end{subfigure}
+	\end{adjustwidth}
+	\caption{Close examination of MAMMLE vs MUSCLE.}
+	\label{fig:mammle-result}
+\end{figure}
+
 Among the 147 instances, MAMMLE performs better in 74 cases and worse in 43 cases than MUSCLE (supplementary Table~\ref{tab:muscle-mammle-all} in Appendix~\ref{apendix:mammle}). We conduct the \textit{one-sided} (i.e., null hypothesis: median FN rate of MUSCLE is better than MAMMLE) Wilcoxon signed ranks test at 95\% confidence level where the null hypothesis is rejected with $p$-value=0.001. To get more insight, we divide the 147 instances into 7 levels of instance size, considering their number of sequences and average sequence length as shown in Table~\ref{tab:data-size}, each level having 20-22 instances. Figure~\ref{fig:boxplot} depicts the FN rate distribution of MAMMLE and MUSCLE across different instance sizes. We see that MAMMLE helps to get better accuracy in all levels except 4 and 6. Notably, variance of both MAMMLE and MUSCLE reduces as the instance size increases; this can be attributed to the fact that ML approach performs better as the data size increases. 
 
 To complement Figure~\ref{fig:boxplot}, we visualize the improvement achieved by MAMMLE by plotting the individual FN rates and MUSCLE FN rate $-$ MAMMLE FN rate for the instances of each level in Figure~\ref{fig:scatter_fn} (scatterplot) and Figure~\ref{fig:scatter} (\textit{stripplot}; adjusts the position of points having similar FN rate for the ease of perception) respectively. Points below (above) the diagonal line (horizontal line at $\Delta$FN rate=0) in Figure~\ref{fig:scatter_fn} (Figure~\ref{fig:scatter}) represent the instances where MAMMLE outperforms MUSCLE. Evidently, the maximum improvement registered by MAMMLE is around 27\% across different levels (Figure~\ref{fig:scatter}). Figure~\ref{fig:scatter_fn} offers further insights. MUSCLE performed worse mostly for the smaller instances (Levels 1-4), which are presumed to be difficult for the ML approach; and here MAMMLE outperforms MUSCLE. On the other hand, MUSCLE outperforms MAMMLE mostly for the larger instances where ML approach performs well anyway. Also, observe that MAMMLE outperforms MUSCLE mostly in the cases when MUSCLE FN rate $> 0.6$. 
@@ -158,6 +153,18 @@ However, the cases (45 out of 147) where MUSCLE is better (within 15\%) demands 
 %Although, MAMMLE's improved cases are distributed across all size levels and a wider range of FN rate, the improvement seems higher on the smaller instances. All these indicate to a potential strength of MAMMLE to yield better trees with limited data (e.g., to estimate gene tree on fewer/smaller gene sequences challenging for ML approach). 
 %However, the cases (45 out of 147) where MUSCLE is better (within 15\%) ask more research effort to enhance the current ensemble method (i.e., greedy consensus). 
 
+\begin{figure}[!htbp]%
+	\begin{adjustwidth}{-1.1cm}{}
+		\centering
+		\begin{subfigure}{0.50\textwidth} \includegraphics[width=\textwidth]{Figure/comparison-ast} \caption{FN rate distribution} \label{fig:boxplot-ast} \end{subfigure}
+		\begin{subfigure}{0.50\textwidth} \includegraphics[width=\textwidth]{Figure/delta4-ast} \caption{MAMMLE: FN rate improvement}\label{fig:scatter-ast}\end{subfigure}
+		\begin{subfigure}{0.60\textwidth} \includegraphics[width=\textwidth]{Figure/delta5-ast} \caption{Individual FN rate: MUSCLE vs MAMMLE}\label{fig:scatter-fn-ast}\end{subfigure}
+	\end{adjustwidth}
+	\caption{Close examination of MAMMLE vs MUSCLE.}
+	\label{fig:mammle-result-ast}
+\end{figure}
+
 \section{Conclusion}
-In this chapter, we presented MAMMLE framework which offers an end-to-end approach for phylogeny estimation from unaligned sequences as a flexible framework whose components can potentially be modified, replaced, or further refined by bioinformatics researchers and practitioners. In the next chapter we move our focus to the estimation of the species tree from multi-locus data where different regions with the genome can evolve differently.
+In this chapter, we presented the MAMMLE framework which offers an end-to-end approach for phylogeny estimation from unaligned sequences as a flexible Open Source framework whose components can potentially be modified, replaced, or further refined by bioinformatics researchers and practitioners. MAMMLE generates multiple alternative alignments and for each of them an ML tree is inferred. We took these multiple hypotheses to our advantage and developed an ensemble approach for producing a better phylogenetic tree. MAMMLE offered upto 27\% improvement in tree accuracy over MUSCLE in our experiments on BAliBASE 3.0 benchmark.
+In the next chapter, we move our focus to phylogenomics to estimate the species tree from genome-wide multi-locus data where different regions with the genome can evolve differently. 
 

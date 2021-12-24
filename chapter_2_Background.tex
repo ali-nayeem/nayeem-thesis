@@ -7,6 +7,7 @@
 %\section{Computational Phylogenetics}
 Computational phylogenetics deals with the design and application of computational tools and techniques to conduct necessary analyses related to phylogeny estimation. The primary aim is to reconstruct a most probable hypothesis about the evolutionary ancestry of a set of taxa (i.e., genes, species, etc.). Here we briefly describe the preliminary concepts involved in computational phylogenetics and multi-objective optimization. 
 %\begin{comment}
+
 \section{Phylogeny}
 Phylogeny refers to the evolutionary relationships among a set of entities such as species, genes, etc popularly represented as a tree known as phylogenetic tree. The entities under consideration are generally referred to as taxa. Each such taxon is placed as a leaf node in a phylogenetic tree and the tree topology represents the evolutionary history. The  internal nodes of the tree represent hypothetical ancestral taxa from which the present day taxa evolved. These ancestral taxa are believed to have existed in the past, but has become extinct. Notably, a tree $T$ is a connected acyclic graph with a set of vertices $V$ and a set of edges $E$. An edge $e = (u, v) \in E$ represents an evolutionary relationship between the two taxa represented by the vertices $u$ and $v$. 
 
@@ -17,10 +18,19 @@ Phylogeny refers to the evolutionary relationships among a set of entities such 
 \label{fig:outgroup}
 \end{figure}
 
-Fig.~\ref{fig:outgroup} shows an example phylogenetic tree among four species: human, chimpanzee, gorilla and orangutan. This evolutionary tree depicts that human and chimpanzee share a common ancestor. As such, we consider humans to be more closely related to chimpanzees than they are to gorillas and orangutans.
+Figure~\ref{fig:outgroup} shows an example phylogenetic tree among four species: human, chimpanzee, gorilla and orangutan. This evolutionary tree depicts that human and chimpanzee share a common ancestor. As such, we consider humans to be more closely related to chimpanzees than they are to gorillas and orangutans.
 %\end{comment}
 %\subsubsection{Rooted and unrooted trees} 
-In a rooted phylogenetic tree (left part of Fig.~\ref{fig:outgroup}), one vertex $r \in V$ is designated as the root of the tree whereas there is no such designated vertex in an unrooted tree (right part of Fig.~\ref{fig:outgroup}). True evolutionary histories are better represented by a rooted tree. However, identifying the root of an estimated phylogenetic tree is generally a difficult task.
+In a rooted phylogenetic tree (left part of Fig.~\ref{fig:outgroup}), one vertex $r \in V$ is designated as the root of the tree whereas there is no such designated vertex in an unrooted tree (right part of Figure~\ref{fig:outgroup}). True evolutionary histories are better represented by a rooted tree. However, identifying the root of an estimated phylogenetic tree is generally a difficult task. Figure~\ref{fig:phy-pipeline} summarizes different tasks involved in a phylogeny estimation pipeline which will be discussed in subsequent sections.
+
+\begin{figure}[!htbp]
+	\centering
+	\includegraphics[width=1.0\textwidth]{Figure/phy-pipeline}
+	\caption[Tasks involved in a phylogeny estimation pipeline.]{Tasks involved in a phylogeny estimation pipeline. It starts by sequencing samples across the genome of different species under consideration. Then in Step 1 the processed sequence data for each gene arealigned using an MSA method. Step 2 infers
+		species phylogeny from the aligned gene sequence data. Two major approaches are used tobuild phylogenies from multiple genes. In the combined approach, all gene alignments areconcatenated into a supermatrix, which is then analyzed using a phylogeny estimation method of choice. The summary method first compute a separate tree for each gene, and then then summarize the discordant gene trees in the best possible manner. Image borrowed from~\cite{mirarab2015novel}}
+	\label{fig:phy-pipeline}
+	
+\end{figure}
 
 \subsection{Phylogenetic Tree Estimation Methods}
 A phylogenetic tree estimation method examine the observations found in the existing species (i.e., leaves of the tree) and attempts to infer how these species are related through evolution from a common ancestor (i.e., the root). Historically morphological traits were considered as the observations. But with the discovery of DNA molecules, molecular characters (i.e., DNA, RNA, proteins) are used to infer better phylogenies as apparently evolution can be best described in molecular levels. Statistical methods uses a model of sequence evolution to estimate a phylogenetic tree from sequence data. Such methods are statistically consistent under standard models of evolution (i.e., the estimate converges to the `true' solution with the increase of data size) and found to perform satisfactorily in practice~\citep{warnow2017computational}. Among them, Maximum Likelihood (ML) is the most popular which performs a heuristic search on the space of possible trees and tries to find the tree that has the highest probability of yielding the observed sequences. Another statistical approach is Bayesian method that, instead of finding a single tree, estimate a probability distribution on trees  based on Markov chain Monte Carlo searches in the tree space. Such methods takes a longer time to have good accuracy than ML. FastTree\citep{price2010fasttree} and RAxML~\citep{stamatakis2014raxml} are the most widely used software for ML tree estimation. FastTree can produce output very quickly with little (and in some cases no) degradation in tree accuracy, as compared to RAxML~\cite{liu2011raxml}. In this thesis we need to estimate a large number of phylogenetic trees. So we prefer FastTree over RAxML.
@@ -32,7 +42,8 @@ The performance of a phylogeny estimation method is evaluated by comparing its o
 \begin{itemize}
 	\item The false negative (FN) rate is the percentage of edges present in the true tree but missing in the estimated tree. It is also also known as the missing branch rate.
 	\item The false positive (FP) rate is the percentage of edges present in the estimated tree but not in the true tree..
-	\item The Robinson-Foulds (RF) rate is the ratio ofthe total number of false positive and false negative edges to the total number
+	\item The Robinson-Foulds (RF) rate is the ratio of
+the total number of false positive and false negative edges to the total number
 	of internal edges in the two trees.
 \end{itemize}
 
@@ -41,7 +52,7 @@ A smaller the value of desirable for the above metrics and all of them are ident
 
 \subsection{Discordance between the Species tree and Gene Trees}%\index{Gene tree discordance}
 We now discuss the issue of discordance between a gene tree and the species tree and the reasons behind it. The species tree represents the evolutionary history among a set of species via the process of speciation. On the contrary, a gene tree represents the evolution of a particular ``gene" within a group of species. When species are split by speciation, the gene copies within species are also split into separate lineages of descent.  Within each such lineage, the gene trees continue branching and descending through time. Thus, the gene trees are contained within the branches of the species trees~\cite{maddison1997gene}.
-However, when gene copies are sampled from various species, the gene tree relating these copies might disagree with the species phylogeny. Fig.~\ref{fig:discordance} shows an example of discordance between a species tree and a gene tree. Here, species $B$ and $C$ are ``sister" species. However, in the gene lineage, $C$ is closer to $D$ than $B$. This discord can arise from the horizontal transfer, incomplete lineage sorting, and gene duplication and extinction~\cite{maddison1997gene}. 
+However, when gene copies are sampled from various species, the gene tree relating these copies might disagree with the species phylogeny. Figure~\ref{fig:discordance} shows an example of discordance between a species tree and a gene tree. Here, species $B$ and $C$ are ``sister" species. However, in the gene lineage, $C$ is closer to $D$ than $B$. This discord can arise from the horizontal transfer, incomplete lineage sorting, and gene duplication and extinction~\cite{maddison1997gene}. 
 
 \begin{figure}[!tb]
 	\centering

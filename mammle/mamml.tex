@@ -44,7 +44,7 @@ Next, MAMMLE infers a ML tree from each of the $N$ alignments using FastTree (\c
 \subsection{Multiobjective Application-aware MUSCLE} \label{sec:ma-muscle}
 
 \subsubsection{Application-aware objective functions}
-To design multi-objective application-aware MUSCLE, we embed the following four simple objective functions, identified in Chapter~\ref{ch:cybernatics} based on their better correlation to the tree accuracy, within the iterative refine phase of MUSCLE. Several pairs of these objectives may have conflicting relationship (please see Chapter~\ref{ch:cybernatics}).  
+To design multi-objective application-aware MUSCLE, we embed the four simple objective functions, identified in Chapter~\ref{ch:cybernatics} based on their better correlation to the tree accuracy, within the iterative refine phase of MUSCLE. Several pairs of these objectives may have conflicting relationship (please see Chapter~\ref{ch:cybernatics}). For the sake of ease, we repeat them as follows.
 \begin{enumerate}
 	\item Maximize similarity for columns containing gaps (SIMG): For each column of the MSA having at least one gap, it calculates the ratio of the most frequent characters. Then all those ratios are added to get the SIMG score.
 	\item Maximize similarity for columns containing no gaps (SIMNG): This is similar to SIMG except that it considers those columns of the MSA that do not have any gap.

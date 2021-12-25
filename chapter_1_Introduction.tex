@@ -5,7 +5,7 @@ Evidence from morphological and gene sequence data suggests that all organisms o
 
 Multiple sequence alignment (MSA) seeks to arrange more than two biological sequences based on certain criteria (e.g., evolutionary history, 3D structure, etc.) by inserting spaces (known as gaps) between letters in the sequences \cite{warnow2017computational}. MSA is a prerequisite subtask in several biological tasks including phylogeny estimation from sequence data, which usually comprises two phases, namely, (A) the computation of an MSA, and subsequently (B) the inference of a tree therefrom. The characteristics, as well as the quality of the MSA, obtained in Phase A dramatically influence the accuracy of the tree in Phase B. Therefore, it is important to select an MSA tool that is the “most suitable” in the phylogenetic context, suggesting the idea of (some sort of) “phylogeny-awareness” in Phase A. 
 
-Improving the phylogeny estimation through focusing on improving MSA computation is not entirely new as is evident, albeit in a limited context, from the literature \cite{redelings2005joint, ashkenazy2018multiple, warnow2013large}. These works do suggest that the nature of MSA computation may influence the outputs (in a domain-specific manner). However, from the context of multi-objective optimization, this has not been hitherto explored. Most real-world optimization problems naturally work towards achieving several objectives. Some of these objectives are conflicting to each other. However, these problems can be transformed into single-objective ones using various simplifying techniques to avoid complexities~\citep{kalyanmoy2001multi}. On the contrary, a multi-objective formulation defines the problem using a set of objective functions and subsequently, specialized methods can be applied to optimize all the objectives simultaneously.
+Improving the phylogeny estimation through focusing on improving MSA computation is not entirely new as is evident, albeit in a limited context, from the literature \cite{redelings2005joint, ashkenazy2018multiple, warnow2013large}. These works do suggest that the nature of MSA computation may influence the outputs (in a domain-specific manner). However, from the context of multi-objective (MO) optimization, this has not been hitherto explored. Most real-world optimization problems naturally work towards achieving several objectives. Some of these objectives are conflicting to each other. However, these problems can be transformed into single-objective ones using various simplifying techniques to avoid complexities~\citep{kalyanmoy2001multi}. On the contrary, a MO formulation defines the problem using a set of objective functions and subsequently, specialized methods can be applied to optimize all the objectives simultaneously.
 
 In this post-genomic era, the availability and relative affordability of various sequencing technologies led to the rapid growth of biological datasets. The datasets increased in two dimensions: more species are being sequenced and longer segments of the genome are sequenced.
 Hence newer datasets are posing new challenges to the researchers. Usually, an MSA method is provided with a default parameter configuration for aligning any problem instance with satisfactory accuracy. But we know that these default values can not guarantee the best output throughout all kinds of datasets~\citep{rubio2018characteristic}. For instance, there is a parameter in ProbCons called the number of iterative refinement passes. Although it can vary between 0 to 1000 the default value is set to 100. We can achieve better results by tuning the parameter values which is not a straightforward task. Moreover, despite rigorous parameter tuning, no method can consistently outperform other methods for all datasets. 
@@ -15,7 +15,7 @@ As no single objective is biologically guaranteed to lead to the most accurate s
 There are different categories of MSA methods available in the literature. We can broadly divide them into three groups: progressive techniques, consistency-based techniques, and iterative techniques. This division is not exclusive as many tools also use a combination of these techniques. The progressive methods (e.g., Clustal $\Omega$~\citep{sievers2011fast}, FSA~\citep{bradley2009fast}) compute the alignment using a guide tree by aligning pairs of sequences in a ``bottom-up'' manner. The consistency-based techniques (e.g., T-Coffee~\citep{notredame2000t}, ProbCons~\citep{do2005probcons}) first construct a database of local and global pairwise alignments to facilitate generating an overall accurate alignment. 
 And the most flexible methods are the iterative methods (e.g., SATe-II \cite{liu2012sate}, PASTA \cite{mirarab2015pasta}). These are particularly appealing because of their ability to fix errors made in the earlier stages of computation by repeating some steps until an optimization criterion or objective function, quantifying the quality of the (re)alignment, converges. Once the challenging task of identifying phylogeny-aware objectives is successful a natural idea would be to incorporate those in these celebrated tools and conduct a comparative study among those.    
 
-Another related and complicated problem arises when inferring phylogeny from genome-wide data comprising longer sequences. In such a scenario, the evolutionary histories can change across different parts of the genome due to biological processes known as incomplete lineage sorting, gene duplication and loss, etc. This has led to the development of new phylogenomic methods at the intersection of phylogenetics and genomics. In this context, the evolutionary relationships of a group of organisms is called the species tree. On the other hand, the phylogeny specific to a particular region of the genome (known as locus or gene) is termed as a gene tree \cite{maddison1997gene}. Incomplete lineage sorting (ILS), modeled by the multi-species coalescent (MSC), is considered to be a dominant cause for gene tree incongruence \cite{mirarab2014evaluating, statistical-binning}. Various optimization criteria (e.g., quartet score, pseudo-likelihood, etc.) are statistically consistent under the MSC model, meaning that they return the true species tree with high probability given sufficiently large numbers of accurate gene trees. However, the number of genes is limited and estimating highly accurate gene trees is difficult. Therefore, even popular methods, optimizing a particular criterion, may fail to reconstruct highly accurate trees under practical model conditions with limited numbers of genes and in the presence of gene tree estimation error. In this context as well, the multi-objective optimization framework seems appealing with phylogeny-aware objective functions.
+Another related and complicated problem arises when inferring phylogeny from genome-wide data comprising longer sequences. In such a scenario, the evolutionary histories can change across different parts of the genome due to biological processes known as incomplete lineage sorting, gene duplication and loss, etc. This has led to the development of new phylogenomic methods at the intersection of phylogenetics and genomics. In this context, the evolutionary relationships of a group of organisms is called the species tree. On the other hand, the phylogeny specific to a particular region of the genome (known as locus or gene) is termed as a gene tree \cite{maddison1997gene}. Incomplete lineage sorting (ILS), modeled by the multi-species coalescent (MSC), is considered to be a dominant cause for gene tree incongruence \cite{mirarab2014evaluating, statistical-binning}. Various optimization criteria (e.g., quartet score, pseudo-likelihood, etc.) are statistically consistent under the MSC model, meaning that they return the true species tree with high probability given sufficiently large numbers of accurate gene trees. However, the number of genes is limited and estimating highly accurate gene trees is difficult. Therefore, even popular methods, optimizing a particular criterion, may fail to reconstruct highly accurate trees under practical model conditions with limited numbers of genes and in the presence of gene tree estimation error. In this context as well, the MO optimization framework seems appealing with phylogeny-aware objective functions.
 
 \section{Research Gap}
 In this thesis we carefully examine the existing studies on phylogenetic analyses and identify the following research gaps which will be further discussed in the subsequent chapters.
@@ -40,16 +40,16 @@ A high-level
 
 \begin{figure}[!htbp]
 	\centering
-	\includegraphics[width=1.0\textwidth]{Figure/research-workflow}
-	\caption[]{A high-level overview of the research works conducted in this thesis
-		The research workflow that we followed in this thesis. Research component 1: we collect simulated and biological datasets to conduct our experiments from renowned studies.
-		Step 2: We study and short-list several objective functions widely used in the literature as well as some novel ones to compute MSA based on their efficacy.
-		Step 3: We will adapt a popular many-objective algorithm that can simultaneously optimize many objectives to generate a large collection of diverse solutions that represent the best compromise among the conflicting objectives. For each alignment we generate a phylogenetic tree using a statistical method.
-		Step 4: We select some bi-objective formulations of MSA from the generated solutions based on their observed association with the tree accuracy measured by rigorous statistical methods.
-		Step 5: We run MO metaheuristics on the selected formations and compare the generated alignments and trees to that of the state-of-the-art tools.
-		Step 6: We incorporate all the phylogeny-aware objectives within state-of-the-art MSA methods with a goal to improve their robustness through MO strategy.
-		Step 7: We formulate the task of species tree estimation by summarizing a set of discordant gene trees as MO optimization task by accumulating the optimization criterion of the state-of-the-art summary methods.
-	}
+.	\includegraphics[width=1.0\textwidth]{Figure/research-overview-new}
+	\caption[A high-level overview of the research works conducted in this thesis]{A high-level overview of the research works conducted in this thesis. Each box depicts a research components which is mapped to our overarching aims denoted by $A[x,y,...]$ and chapters denoted by $C[x,y,...]$ inside a blue circle embedded within the box.
+		Research component 1: we collect simulated and biological datasets to conduct our experiments from renowned studies.
+		Research component 2: we study and short-list several objective functions widely used in the literature as well as some novel ones to compute MSA based on their efficacy.
+		Research component 3: We adapt popular MO metaheuristics which simultaneously optimize several objectives to generate a large collection of diverse solutions that represent the best compromise among the conflicting objectives. For each alignment we generate a phylogenetic tree using a standard approach.
+		Research component 4: We select some MO formulations of MSA and related problems based on their observed association with a phylogeny-aware measure through rigorous statistical methods.
+		Step 5: We run selected  MO metaheuristics on the selected formations and compare the generated alignments and trees to that of the state-of-the-art tools.
+		Research component 6: We incorporate all the phylogeny-aware objectives within state-of-the-art MSA methods with a goal to improve their robustness through MO strategy.
+		Research component 7: We formulate the task of species tree estimation by summarizing a set of discordant gene trees as MO optimization task by accumulating the optimization criterion of the state-of-the-art summary methods.}
+	
 	\label{fig:research-workflow}
 	
 \end{figure}
@@ -73,21 +73,26 @@ To address the research gaps mentioned earlier, our overarching goal is three-fo
 \end{enumerate}
 
 \section{Our Contribution}
-This thesis have addressed some notable challenges in computing high-quality phylogenetic trees from sequence alignments and thereby made the following contributions.
+This thesis addressed some notable challenges in computing high-quality phylogenetic trees from sequence alignments and thereby made the following contributions.
 
-\begin{enumerate}
-\item We have developed a systematic methodology for choosing an appropriate multi-objective formulation of MSA considering the application domain. In this thesis, we consider phylogeny estimation to be the intended application of MSA.
+\subsection{Systematic method to detect appropriate MO formulations}
+ We developed a systematic methodology for choosing an appropriate multi-objective formulation of MSA considering the application domain with the help of rigorous statistical methods like multi-variate linear regression. We considered phylogeny estimation to be the intended application of MSA in this thesis,.
 
-\item We have proposed several phylogeny-aware multi-objective formulations of MSA considering their high potential to yield better phylogenetic trees.
+\subsection{Phylogeny-aware MO formulations}
+ We proposed several phylogeny-aware multi-objective formulations of MSA considering their high potential to yield better phylogenetic trees. We experimental demonstrated that these formulations can yield better solutions compared to the existing methods.
 
-\item We have developed some robust methods for alignment-based phylogeny estimation stemming from the hybridization of state-of-the-art iterative MSA methods and many-objective optimization strategies. 
+\subsection{Hybridization of state of the art and MO principles}
+ We developed some robust methods for alignment-based phylogeny estimation stemming from the hybridization of state-of-the-art iterative MSA methods and many-objective optimization strategies by carefully embedding several phylogeny-aware objective functions within the workflow of those MSA methods. 
 
-\item We have designed some customized multi-objective optimization algorithms for genome-wide species tree estimation by summarizing a set of heterogeneous gene trees. The proposed algorithms could be of independent interest to the multi-objective optimization research community.
+\subsection{Custom MO phylogenomic approach to infer species tree}
+ We designed some customized multi-objective optimization algorithms for genome-wide species tree estimation by summarizing a set of heterogeneous gene trees. The proposed algorithms could be of independent interest to the multi-objective optimization research community.
 
-\item We have developed an Open Source software framework for estimating phylogenetic trees from MSAs using our proposed approaches.
+\subsection{Open Source flexible software framework}
+ We developed an Open Source software framework for estimating phylogenetic trees from MSAs using our proposed approaches. Its components can potentially be modified, replaced or further refined by bioinformatics researchers and practitioners.
 
-\item We have presented a comparative analysis on the overall efficacy of the concept of domain-specific measures in general and phylogeny-awareness in particular.
-\end{enumerate}
+\subsection{Comparative study}
+ We presented a scientific discourse along with a comparative analysis on the overall efficacy of the concept of domain-specific measures in general and phylogeny-awareness in particular. It could be useful in a generic way in any branch of science and engineering.
+
 
 
 \section{Thesis Organization}

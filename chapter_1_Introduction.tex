@@ -18,7 +18,7 @@ And the most flexible methods are the iterative methods (e.g., SATe-II \cite{liu
 Another related and complicated problem arises when inferring phylogeny from genome-wide data comprising longer sequences. In such a scenario, the evolutionary histories can change across different parts of the genome due to biological processes known as incomplete lineage sorting, gene duplication and loss, etc. This has led to the development of new phylogenomic methods at the intersection of phylogenetics and genomics. In this context, the evolutionary relationships of a group of organisms is called the species tree. On the other hand, the phylogeny specific to a particular region of the genome (known as locus or gene) is termed as a gene tree \cite{maddison1997gene}. Incomplete lineage sorting (ILS), modeled by the multi-species coalescent (MSC), is considered to be a dominant cause for gene tree incongruence \cite{mirarab2014evaluating, statistical-binning}. Various optimization criteria (e.g., quartet score, pseudo-likelihood, etc.) are statistically consistent under the MSC model, meaning that they return the true species tree with high probability given sufficiently large numbers of accurate gene trees. However, the number of genes is limited and estimating highly accurate gene trees is difficult. Therefore, even popular methods, optimizing a particular criterion, may fail to reconstruct highly accurate trees under practical model conditions with limited numbers of genes and in the presence of gene tree estimation error. In this context as well, the MO optimization framework seems appealing with phylogeny-aware objective functions.
 
 \section{Research Gap}
-In this thesis we carefully examine the existing studies on phylogenetic analyses and identify the following research gaps which will be further discussed in the subsequent chapters.
+To conduct this thesis, we carefully examine the relevant studies on phylogenetic analyses and identify the following research gaps which will be further discussed in the subsequent chapters.
 \begin{enumerate}
 	\item  More research effort need to be employed to combine the strength of different approaches in a generic way to tackle the challenges of the post-genomic era as no single method can provide high accuracy across different data. 
 	
@@ -36,7 +36,7 @@ In this thesis we carefully examine the existing studies on phylogenetic analyse
 \end{enumerate}
 
 To address all these research gaps mentioned above, we \textbf{TBD}
-A high-level
+A high-level overview of the research works conducted in this thesis is illustrated in Figure~\ref{fig:research-workflow}
 
 \begin{figure}[!htbp]
 	\centering
@@ -44,19 +44,18 @@ A high-level
 	\caption[A high-level overview of the research works conducted in this thesis]{A high-level overview of the research works conducted in this thesis. Each box depicts a research components which is mapped to our overarching aims denoted by $A[x,y,...]$ and chapters denoted by $C[x,y,...]$ inside a blue circle embedded within the box.
 		Research component 1: we collect simulated and biological datasets to conduct our experiments from renowned studies.
 		Research component 2: we study and short-list several objective functions widely used in the literature as well as some novel ones to compute MSA based on their efficacy.
-		Research component 3: We adapt popular MO metaheuristics which simultaneously optimize several objectives to generate a large collection of diverse solutions that represent the best compromise among the conflicting objectives. For each alignment we generate a phylogenetic tree using a standard approach.
-		Research component 4: We select some MO formulations of MSA and related problems based on their observed association with a phylogeny-aware measure through rigorous statistical methods.
+		Research component 3: we adapt popular MO metaheuristics which simultaneously optimize several objectives to generate a large collection of diverse solutions that represent the best compromise among the conflicting objectives. For each alignment we generate a phylogenetic tree using a standard approach.
+		Research component 4: we select some MO formulations of MSA and related problems based on their observed association with a phylogeny-aware measure through rigorous statistical methods.
 		Step 5: We run selected  MO metaheuristics on the selected formations and compare the generated alignments and trees to that of the state-of-the-art tools.
-		Research component 6: We incorporate all the phylogeny-aware objectives within state-of-the-art MSA methods with a goal to improve their robustness through MO strategy.
-		Research component 7: We formulate the task of species tree estimation by summarizing a set of discordant gene trees as MO optimization task by accumulating the optimization criterion of the state-of-the-art summary methods.}
+		Research component 6: we incorporate all the phylogeny-aware objectives within state-of-the-art MSA methods with a goal to improve their robustness through MO strategy.
+		Research component 7: we formulate the task of species tree estimation by summarizing a set of discordant gene trees as MO optimization task by accumulating the optimization criterion of the state-of-the-art summary methods.}
 	
 	\label{fig:research-workflow}
 	
 \end{figure}
 
 \section{Thesis Objectives}
-
-To address the research gaps mentioned earlier, our overarching goal is three-fold as follows. Firstly, we aim to investigate whether a domain-specific measure is useful in MSA computation and develop a systematic methodology to leverage such a measure (Aim A). Secondly, we want to advance the state of the art of phylogeny estimation and closely related problems like species tree estimations (Aim B), and thirdly, we want to achieve this advancement through leveraging the multi-objective optimization framework (Aim C). In our case, the domain principally is phylogeny estimation and hence we introduce the concept of ‘phylogeny-awareness’. A research workflow diagram for this thesis is shown in Figure~\ref{fig:research-workflow}. Below, we mention the direct relation to the aims above in square brackets. The main objectives of this thesis are as follows:
+The overarching aim of this thesis is three-fold as follows. Firstly, we aim to investigate whether a domain-specific measure is useful in MSA computation and develop a systematic methodology to leverage such a measure (Aim A). Secondly, we want to advance the state of the art of phylogeny estimation and closely related problems like species tree estimations (Aim B), and thirdly, we want to achieve this advancement through leveraging the multi-objective optimization framework (Aim C). In our case, the domain principally is phylogeny estimation and hence we introduce the concept of ‘phylogeny-awareness’. Below, we mention the direct relation to the aims above in square brackets. The main objectives of this thesis are as follows:
 
 \begin{enumerate}
 \item To systematically investigate whether the generic metrics, widely used for assessing the alignment quality, can accurately represent the level of acceptance in the context of a specific application domain, i.e., in our case, phylogeny estimation. And in this context, to investigate, how useful the phylogeny-aware objectives are. [Aim A]

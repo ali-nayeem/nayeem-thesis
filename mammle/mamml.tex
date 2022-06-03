@@ -17,8 +17,7 @@ Please recall that, a huge number of MSA methods are available in the literature
 
  
 
-The efficacy of using several different objective functions to compare candidate MSAs persuaded researchers (\cite{da2010alineaga, ortuno2013optimizing, soto2014multi, abbasi2015local, rubio2016hybrid, zambrano2017comparing, rubio2018characteristic, benitez2020sequoya}) to employ multi-objective (MO) optimization. We were motivated to explore such an approach due to the fact that the alignment optimized under one objective may be different from the alignments generated under other objectives, inferring discordant homologies relating to the sequences under consideration. MO optimization can address this issue by optimizing multiple conflicting objectives simultaneously to
-generate a set of alternative alignments. Also, as no single objective is biologically guaranteed to lead to the most accurate solution, the argument of combining alternative criteria seems reasonable. However, such an approach needs to be backed by the choice of appropriate objective functions and performance measures that are not addressed in the existing MO literature on MSA as we already discussed in Chapter~\ref{ch:cybernatics}. 
+%The efficacy of using several different objective functions to compare candidate MSAs persuaded researchers (\cite{da2010alineaga, ortuno2013optimizing, soto2014multi, abbasi2015local, rubio2016hybrid, zambrano2017comparing, rubio2018characteristic, benitez2020sequoya}) to employ multi-objective (MO) optimization. We were motivated to explore such an approach due to the fact that the alignment optimized under one objective may be different from the alignments generated under other objectives, inferring discordant homologies relating to the sequences under consideration. MO optimization can address this issue by optimizing multiple conflicting objectives simultaneously to generate a set of alternative alignments. Also, as no single objective is biologically guaranteed to lead to the most accurate solution, the argument of combining alternative criteria seems reasonable. However, such an approach needs to be backed by the choice of appropriate objective functions and performance measures that are not addressed in the existing MO literature on MSA as we already discussed in Chapter~\ref{ch:cybernatics}. 
 
 Besides phylogeny estimation, MSA has other important biological applications, such as, prediction of structure/function of new proteins, identification of conserved regions, etc. Traditionally, the MSA methods are benchmarked based on two alignment quality metrics: SP-score and TC-score~\cite{warnow2017computational}. These measures compare the estimated alignment to the reference alignment (i.e., the ground truth). In Chapter~\ref{ch:cybernatics}, we argued with experimental evidence that such generic measures might not be adequate to choose the best MSA method to perform a specific biological task (e.g., protein structure prediction, phylogeny estimation, etc.). Instead, we proposed applying a domain-specific measure that can potentially capture to what extent the output can serve the actual purpose. Taking phylogeny estimation as the intended application, we demonstrated the advantages of using tree quality for performance evaluation instead of traditional measures. We developed a systematic method to identify application-aware objective functions based on their correlation to the tree quality. It was subsequently shown, through extensive experiments, that optimizing those objectives by MO techniques can yield high-quality phylogenetic trees. Thus an MSA tool that is aware of its intended usage (i.e., phylogeny estimation in our case) is expected to yield output of higher quality as opposed to general-purpose MSA tools as we demonstrated in Chapter~\ref{ch:cybernatics}. 
 
@@ -29,10 +28,10 @@ Here, we present MAMMLE, a framework through which we infuse the concept of MO a
 \begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=0.9\textwidth]{Figure/workflow.pdf}
-	\caption{Simplified pipeline of MAMMLE framework. The components marked with a blue shade can potentially be modified, replaced, or further refined by bioinformatics researchers and practitioners.}
+	\caption[Simplified pipeline of MAMMLE framework.]{Simplified pipeline of MAMMLE framework. The components marked with a blue shade can potentially be modified, replaced, or further refined by bioinformatics researchers and practitioners.}
 	\label{fig:workflow}
 \end{figure}
-%\vspace{-12 mm}
+\vspace{-8 mm}
 
 \section{Methods}
 The phylogenetic reconstruction pipeline of MAMMLE is illustrate in Figure~\ref{fig:workflow}. The components open to modification are marked with a blue shade. It starts by feeding the unaligned sequences to the system, which simultaneously optimizes four application-aware objectives with the help of $N$ well-distributed 4D weight vectors given as input and generate $N$ (in this article $N=30$) alternative alignments (please refer to Section~\ref{sec:ma-muscle} for details). %We choose to work with MUSCLE due to its simplicity and efficacy. %Although we use MUSCLE in this article due to its simplicity and efficacy, it can be replaced by other iterative MSA methods. 
@@ -61,7 +60,7 @@ Among the several classes of MO algorithms (e.g., pareto-based, decomposition-ba
 \begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=0.9\textwidth]{Figure/ma-muscle}
-	\caption{High-level workflow of MO application-aware MUSCLE for a single weight vector. Steps (3.4 to 3.6) added/modified on the original MUSCLE are marked with red color. This figure is modification of the original image taken from~\cite{edgar2004muscle}.}
+	\caption[High-level workflow of MO application-aware MUSCLE for a single weight vector.]{High-level workflow of MO application-aware MUSCLE for a single weight vector. Steps (3.4 to 3.6) added/modified on the original MUSCLE are marked with red color. This figure is modification of the original image taken from~\cite{edgar2004muscle}.}
 	\label{fig:ma-muscle}
 \end{figure}
 
@@ -89,7 +88,7 @@ adding one clade at a time, the most frequently occurring clade that is compatib
 in the greedy consensus tree breaking ties randomly if necessary.
 This process
 ends when the parietal being constructed is fully resolved which is also known as a bifurcating tree. 
-Greedy consensus tree is also known ``majority rule extended''~\cite{phylip}, and  implemented in PAUP*~\cite{swofford_paup*_2002}. 
+Greedy consensus tree is also known ``majority rule extended''~\cite{phylip}, and the version that we used in this chapter is implemented in PAUP*~\cite{swofford_paup*_2002}. 
 
 \subsection{Tree Accuracy Measure} 
 We evaluate the accuracy of each estimated phylogenetic tree with respect to the reference phylogenetic tree using a widely used measure known as the False Negative (FN) rate. FN rate is the percentage of edges present in the true tree but missing in the estimated tree. So a small value of FN rate is desirable. Although there are two more common tree error measures (False Positive (FP rate) and and Robinson-Foulds (RF) rate), all of them are identical when true and estimated trees are binary~\citep{warnow2017computational}. In this thesis we worked with binary trees only. %as a quality measure, 
@@ -140,7 +139,7 @@ We compared MAMMLE with MUSCLE (with FastTree) on the most widely-used BAliBASE 
 			%\caption{FN rate distribution} \label{fig:boxplot} 
 		\end{subfigure}
 		\begin{subfigure}{0.40\textwidth} \includegraphics[width=\textwidth]{Figure/delta3} \caption{ FN rate improvement}\label{fig:scatter}\end{subfigure}
-		\begin{subfigure}{0.40\textwidth} \includegraphics[width=\textwidth]{Figure/delta4-momuscle} 
+		\begin{subfigure}{0.40\textwidth} \includegraphics[width=\textwidth]{Figure/delta4-momuscle.png} 
 			%\caption{MAMMLE: FN rate improvement}\label{fig:scatter}
 		\end{subfigure}
 		
@@ -152,7 +151,6 @@ We compared MAMMLE with MUSCLE (with FastTree) on the most widely-used BAliBASE 
 	\caption[Close examination of MAMMLE (MO-AW-MUSCLE) vs MUSCLE]{Close examination of MAMMLE (MO-AW-MUSCLE) vs MUSCLE. Top panel (i.e., part (a)) shows the FN rate distribution of MAMMLE (MO-AW-MUSCLE) vs MUSCLE. Middle panel (i.e., part (b))) shows the FN rate improvement of MAMMLE (MO-AW-MUSCLE) over MUSCLE. Bottom panel (i.e., part (c)) shows the individual FN rate of MAMMLE (MO-AW-MUSCLE) against that of MUSCLE for each instance. The left (right) column represents results for MAMMLE (MO-AW-MUSCLE) }
 	\label{fig:mammle-result}
 \end{figure}
-
 
 
 %\subsection{Performance of MAMMLE }
@@ -168,6 +166,7 @@ We compared MAMMLE with MUSCLE (with FastTree) on the most widely-used BAliBASE 
 %	\label{fig:mammle-result}
 %\end{figure}
 
+\subsection{MAMMLE in the Basic Form}
 Among the 147 instances, MAMMLE performs better in 74 cases and worse in 43 cases than MUSCLE (supplementary Table~\ref{tab:muscle-mammle-all} in Appendix~\ref{apendix:mammle}). We conduct the \textit{one-sided} (i.e., null hypothesis: median FN rate of MUSCLE is better than MAMMLE) Wilcoxon signed ranks test at 95\% confidence level where the null hypothesis is rejected with $p$-value=0.001. To get more insight, we divide the 147 instances into 7 levels of instance size, considering their number of sequences and average sequence length as shown in Table~\ref{tab:data-size}, each level having 20-22 instances. We examine the performance of MAMMLE with respect to MUSCLE in the left column of Figure~\ref{fig:mammle-result}. We also show the comparative results of the best FN rate from MO application-aware MUSCLE (MO-AW-MUSCLE) against MUSCLE in the right column of Figure~\ref{fig:mammle-result}, to demonstrate the potential of MO strategy and usefulness of the ensemble approach of MAMMLE. We see that the best FN rate achieved by MO-AW-MUSCLE is clearly better than that of MUSCLE except for a few instances.
 Figure~\ref{fig:boxplot} depicts the FN rate distribution of MAMMLE and MUSCLE across different instance sizes. We see that MAMMLE helps to get better accuracy in all levels except 4 and 6. Notably, variance of both MAMMLE and MUSCLE reduces as the instance size increases; this can be attributed to the fact that ML approach performs better as the data size increases. 
 
@@ -182,7 +181,7 @@ However, the cases (45 out of 147) where MUSCLE is better (within 15\%) demands 
 %However, the cases (45 out of 147) where MUSCLE is better (within 15\%) ask more research effort to enhance the current ensemble method (i.e., greedy consensus). 
 
 \subsection{MAMMLE with Ensemble based on Quartet Consistency}
-Now we analyze the performance of MAMMLE by using a different ensemble approach which is summarizing the generated ML trees based on quartet consistency score using ASTRAL~\cite{zhang2018astral}, one of the most accurate and widely used coalescent-based methods to infer species trees. Please recall that, the quartet score of a candidate summarized tree $T$ is the total, across all the input trees, of the number of induced quartet trees that $T$ agrees with. We examine the performance of MAMMLE with respect to MUSCLE in the left column of Figure~\ref{fig:mammle-result-ast}. We also show the comparative results of the best FN rate from MO application-aware MUSCLE (MO-AW-MUSCLE) against MUSCLE in the right column of Figure~\ref{fig:mammle-result-ast}.
+Now we analyze the performance of MAMMLE by using a different ensemble approach which is summarizing the generated ML trees based on quartet consistency score using ASTRAL~\cite{zhang2018astral}, one of the most accurate and widely used coalescent-based methods to infer species trees. Please recall that, the quartet score of a candidate summarized tree $T$ is the total, across all the input trees, of the number of induced quartet trees that $T$ agrees with. We examine the performance of MAMMLE compared to MUSCLE in the left column of Figure~\ref{fig:mammle-result-ast}. We also show the comparative results of the best FN rate from MO application-aware MUSCLE (MO-AW-MUSCLE) against MUSCLE in the right column of Figure~\ref{fig:mammle-result-ast}.
 
 Among the 147 instances, MAMMLE performs better in 68 cases and worse in 41 cases than MUSCLE (supplementary Table~\ref{tab:muscle-mammle-all} in Appendix~\ref{apendix:mammle}). We conduct the \textit{one-sided} (i.e., null hypothesis: median FN rate of MUSCLE is better than MAMMLE) Wilcoxon signed ranks test at 95\% confidence level where the null hypothesis is rejected with $p$-value=0.001. 
 Figure~\ref{fig:boxplot-ast} depicts the FN rate distribution of MAMMLE and MUSCLE across different instance sizes. 
@@ -197,7 +196,7 @@ From all these results, it seems that the MAMMLE with ASTRAL based ensemble is n
 			%\caption{FN rate distribution} \label{fig:boxplot} 
 		\end{subfigure}
 		\begin{subfigure}{0.40\textwidth} \includegraphics[width=\textwidth]{Figure/delta4-ast} \caption{ FN rate improvement}\label{fig:scatter-ast}\end{subfigure}
-		\begin{subfigure}{0.40\textwidth} \includegraphics[width=\textwidth]{Figure/delta4-momuscle} 
+		\begin{subfigure}{0.40\textwidth} \includegraphics[width=\textwidth]{Figure/delta4-momuscle.png} 
 			%\caption{MAMMLE: FN rate improvement}\label{fig:scatter}
 		\end{subfigure}
 		
@@ -221,14 +220,16 @@ From all these results, it seems that the MAMMLE with ASTRAL based ensemble is n
 %	\label{fig:mammle-result-ast}
 %\end{figure}
 
-\subsection{Ensemble based on ML score from Concatenated MSAs}
-Finally, we would like to access MAMMLE by using another ensemble method based on ML score from concatenated MSAs. Here, at first we concatenate the unique MSAs generated by MO-AW-MUSCLE to get a single average MSA. This concatenation helps to simultaneously consider all the phylogenetic signals contained in columns of the alternative MSAs generated by the MO approach as suggested by~\cite{ashkenazy2018multiple}.
-Then we calculate ML score of the (average MSA, ML tree) pairs for each ML tree obtained from MO-AW-MUSCLE and select the pair with the highest tree as the output. We examine the performance of MAMMLE with respect to MUSCLE in the left column of Figure~\ref{fig:mammle-result-ast}. We also show the comparative results of the best FN rate from MO application-aware MUSCLE (MO-AW-MUSCLE) against MUSCLE in the right column of Figure~\ref{fig:mammle-result-ast}.
+\subsection{Ensemble based on ML score from Concatenation of MSAs}
+Finally, we would like to access MAMMLE by using another ensemble method based on ML score computed using a concatenated MSA. Here, at first, we concatenate the unique MSAs generated by MO-AW-MUSCLE to get a single average MSA. This concatenation helps to simultaneously consider all the phylogenetic signals contained in columns of the alternative MSAs generated by the MO approach as suggested by~\cite{ashkenazy2018multiple}.
+Then we calculate the ML score of the (average MSA, ML tree) pairs for each ML tree obtained from MO-AW-MUSCLE and select the pair with the highest tree as the output. We examine the performance of MAMMLE compared to MUSCLE in the left column of Figure~\ref{fig:mammle-result-ast}. We also show the comparative results of the best FN rate from MO application-aware MUSCLE (MO-AW-MUSCLE) against MUSCLE in the right column of Figure~\ref{fig:mammle-result-ast}.
 
 Among the 147 instances, MAMMLE performs better in 82 cases and worse in 37 cases than MUSCLE (supplementary Table~\ref{tab:muscle-mammle-all} in Appendix~\ref{apendix:mammle}). We conduct the \textit{one-sided} (i.e., null hypothesis: median FN rate of MUSCLE is better than MAMMLE) Wilcoxon signed ranks test at 95\% confidence level where the null hypothesis is rejected with $p$-value=$1.53\times10^{-5}$. 
 Figure~\ref{fig:boxplot-ml} depicts the FN rate distribution of MAMMLE and MUSCLE across different instance sizes. 
 To complement Figure~\ref{fig:boxplot-ml}, we visualize the improvement achieved by MAMMLE by plotting the individual FN rates and MUSCLE FN rate $-$ MAMMLE FN rate for the instances of each level in Figure~\ref{fig:scatter-fn-ml} (scatterplot) and Figure~\ref{fig:scatter-ml} (stripplot) respectively. Points below (above) the diagonal line (horizontal line at $\Delta$FN rate=0) in Figure~\ref{fig:scatter-fn-ml} (Figure~\ref{fig:scatter-ml}) represent the instances where MAMMLE outperforms MUSCLE. The maximum improvement registered by MAMMLE is around 40\% across different levels (Figure~\ref{fig:scatter-ml})
-From all these results, we find that the MAMMLE variant with ML score based ensemble is the clearly ahead of the other two variants. However, this variant takes considerably larger time than the others.
+
+We contrast among these variants by applying the Friedman test~\cite{friedman1937use} followed by complementary Holm’s post-hoc procedure~\cite{holm1979simple} on Table~\ref{tab:mammle-stat-test} with 95\% confidence. This table clearly shows that the MAMMLE variant with ML score based ensemble can better retrieve the best solution of MO-AW-MUSCLE compared to the other two variants.
+From all these results, we find that the MAMMLE with ML score is the clearly ahead of the other two variants. However, this variant takes considerably larger time than the others.
 \begin{figure}[!htbp]%
 	\begin{adjustwidth}{-1.2cm}{}
 		\centering
@@ -237,7 +238,7 @@ From all these results, we find that the MAMMLE variant with ML score based ense
 			%\caption{FN rate distribution} \label{fig:boxplot} 
 		\end{subfigure}
 		\begin{subfigure}{0.40\textwidth} \includegraphics[width=\textwidth]{Figure/delta4-ml} \caption{ FN rate improvement}\label{fig:scatter-ml}\end{subfigure}
-		\begin{subfigure}{0.40\textwidth} \includegraphics[width=\textwidth]{Figure/delta4-momuscle} 
+		\begin{subfigure}{0.40\textwidth} \includegraphics[width=\textwidth]{Figure/delta4-momuscle.png} 
 			%\caption{MAMMLE: FN rate improvement}\label{fig:scatter}
 		\end{subfigure}
 		
@@ -249,6 +250,37 @@ From all these results, we find that the MAMMLE variant with ML score based ense
 	\caption[Close examination of MAMMLE with ML score based ensemble (MO-AW-MUSCLE) vs MUSCLE]{Close examination of MAMMLE with ML score based ensemble (MO-AW-MUSCLE) vs MUSCLE. Top panel (i.e., part (a)) shows the FN rate distribution of MAMMLE (MO-AW-MUSCLE) vs MUSCLE. Middle panel (i.e., part (b))) shows the FN rate improvement of MAMMLE (MO-AW-MUSCLE) over MUSCLE. Bottom panel (i.e., part (c)) shows the individual FN rate of MAMMLE (MO-AW-MUSCLE) against that of MUSCLE for each instance. The left (right) column represents results for MAMMLE (MO-AW-MUSCLE).}
 	\label{fig:mammle-result-ml}
 \end{figure}
+
+% Table generated by Excel2LaTeX from sheet 'stat test'
+\begin{table}[!htbp]
+	\small
+	\centering
+	\caption[Friedman test and Holm's post-hoc procedure to assess the significance of difference among the MAMMLE variants.] {\underline{Friedman test (Column 2):} Friedman's rank (lower is better) of the MAMMLE variants, MO-AW-MUSCLE and MUSCLE based on achieved FN rates on 147 instances. We also show the computed statistics and corresponding $ p $-value.
+		\underline{Holm's post-hoc procedure (Columns 3 - 7):} Comparison among the PMAO variants using the Holm's post-hoc procedures. Each entry shows the adjusted $p$-value which indicates the significance of the difference in performance between two methods. The cell that denotes a significant difference is marked with green color.}
+	\begin{tabular}{|L{2.6cm}|r|c|c|c|c|c|}
+		\hline
+		\multicolumn{1}{|c|}{1} & \multicolumn{1}{c|}{2} & 3     & 4     & 5     & 6     & 7 \\
+		\hline
+		\multicolumn{1}{|c|}{\multirow{2}[4]{*}{Method}} & \multicolumn{1}{c|}{\multirow{2}[4]{*}{\rotatebox[origin=c]{90}{Friedman Rank*}}} & \multicolumn{5}{c|}{Holm's adjusted $p$-value} \\
+		\cline{3-7}          &       & \multicolumn{1}{l|}{\rotatebox[origin=c]{60}{MO-AW-MUSCLE best}} & \multicolumn{1}{l|}{\rotatebox[origin=c]{60}{MAMAMLE-ML}} & \multicolumn{1}{l|}{\rotatebox[origin=c]{60}{MAMAMLE-greedy}} & \multicolumn{1}{l|}{\rotatebox[origin=c]{60}{MAMAMLE-astral}} & \multicolumn{1}{l|}{\rotatebox[origin=c]{60}{MUSCLE}} \\
+		\hline
+		MO-AW-MUSCLE best & 1.7109 & -     & \multicolumn{1}{r|}{\cellcolor[rgb]{ .439,  .678,  .278}0.0000} & \multicolumn{1}{r|}{\cellcolor[rgb]{ .439,  .678,  .278}0.0000} & \multicolumn{1}{r|}{\cellcolor[rgb]{ .439,  .678,  .278}0.0000} & \multicolumn{1}{r|}{\cellcolor[rgb]{ .439,  .678,  .278}0.0000} \\
+		\hline
+		MAMAMLE-ML & 2.8878 & \multicolumn{1}{r|}{\cellcolor[rgb]{ .439,  .678,  .278}0.0000} & -     & \multicolumn{1}{r|}{0.1182} & \multicolumn{1}{r|}{\cellcolor[rgb]{ .439,  .678,  .278}0.0076} & \multicolumn{1}{r|}{\cellcolor[rgb]{ .439,  .678,  .278}0.00028} \\
+		\hline
+		MAMAMLE-greedy & 3.2891 & \multicolumn{1}{r|}{\cellcolor[rgb]{ .439,  .678,  .278}0.0000} & \multicolumn{1}{r|}{0.1182} & -     & \multicolumn{1}{r|}{0.6386} & \multicolumn{1}{r|}{0.17245} \\
+		\hline
+		MAMAMLE-astral & 3.4728 & \multicolumn{1}{r|}{\cellcolor[rgb]{ .439,  .678,  .278}0.0000} & \multicolumn{1}{r|}{\cellcolor[rgb]{ .439,  .678,  .278}0.0076} & 0.6386 & -     & \multicolumn{1}{r|}{0.63859} \\
+		\hline
+		MUSCLE  & 3.6395 & \multicolumn{1}{r|}{\cellcolor[rgb]{ .439,  .678,  .278}0.0000} & \multicolumn{1}{r|}{\cellcolor[rgb]{ .439,  .678,  .278}0.00028} & \multicolumn{1}{r|}{0.17245} & \multicolumn{1}{r|}{0.63859} & - \\
+		\hline \hline
+		*Statistic & 45.8639 & \multicolumn{5}{c|}{\multirow{2}[4]{*}{N/A}} \\
+		\cline{1-2}    *$p$-value & 0.0000 & \multicolumn{5}{c|}{} \\
+		\hline
+	\end{tabular}%
+	\label{tab:mammle-stat-test}%
+\end{table}%
+
 
 \section{Conclusion}
 In this chapter, we presented the MAMMLE framework which offers an end-to-end approach for phylogeny estimation from unaligned sequences as a flexible Open Source framework whose components can potentially be modified, replaced, or further refined by bioinformatics researchers and practitioners. MAMMLE generates multiple alternative alignments and for each of them an ML tree is inferred. We took these multiple hypotheses to our advantage and developed an ensemble approach for producing a better phylogenetic tree. MAMMLE offered upto 40\% improvement in tree accuracy over MUSCLE in our experiments on BAliBASE 3.0 benchmark.

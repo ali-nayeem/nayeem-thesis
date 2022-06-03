@@ -32,7 +32,7 @@ To conduct this thesis, we carefully examine the relevant studies on phylogeneti
 	\item  No solid theoretical/empirical ground in the literature for choosing the appropriate objective functions from numerous existing objectives  or newly proposed.
 	
 	
-	\item No systematic endeavor effort found in the literature to improve the performance of summary methods for species tree estimation by combining multiple statistically consistent criteria.
+	\item No systematic endeavor found in the literature to improve the performance of summary methods for species tree estimation by combining multiple statistically consistent criteria.
 \end{enumerate}
 
 In this thesis we make an effort to address these research gaps thereby advancing the state of the art in several dimensions. In particular, to address all these research gaps, we systematically carry out an in-depth study comprising several components inter-twinned with each other as described below.      
@@ -83,26 +83,27 @@ The overarching aim of this thesis is three-fold as follows. Firstly, we aim to 
 
 \section{Our Contribution}
 This thesis addressed some notable challenges in computing high-quality phylogenetic trees from sequence alignments and thereby made the following contributions.
+\begin{description}
 
-\subsection{Systematic method to formulate an effective MO task}
+\item [Systematic method to formulate an effective MO task:]
  We developed a systematic methodology for choosing an appropriate multi-objective formulation of MSA considering the application domain with the help of rigorous statistical methods like multi-variate linear regression. We considered phylogeny estimation to be the intended application of MSA in this thesis,.
 
-\subsection{Phylogeny-aware MO formulations}
+\item [Phylogeny-aware MO formulations:]
  We proposed several phylogeny-aware multi-objective formulations of MSA considering their high potential to yield better phylogenetic trees. We experimental demonstrated that these formulations can yield better solutions compared to the existing methods.
 
-\subsection{Hybridization of state of the art and MO principles}
+\item [Hybridization of state of the art and MO principles:]
  We developed some robust methods for alignment-based phylogeny estimation stemming from the hybridization of state-of-the-art iterative MSA methods and many-objective optimization strategies by carefully embedding several phylogeny-aware objective functions within the workflow of those MSA methods.
 
-\subsection{Custom MO phylogenomic approach to infer species tree}
+\item [Custom MO phylogenomic approach to infer species tree:]
  We designed some customized multi-objective optimization algorithms for genome-wide species tree estimation by summarizing a set of heterogeneous gene trees. The proposed algorithms could be of independent interest to the multi-objective optimization research community.
 
-\subsection{Open Source flexible software framework}
+\item [Open Source flexible software framework:]
  We developed an Open Source software framework for estimating phylogenetic trees from MSAs using our proposed approaches. Its components can potentially be modified, replaced or further refined by bioinformatics researchers and practitioners.
 
-\subsection{Comparative study}
+\item [Comparative study:]
  We presented a scientific discourse along with a comparative analysis on the overall efficacy of the concept of domain-specific measures in general and phylogeny-awareness in particular. It suggests the universal appeal of the newly introduced concept of application-awareness which could be useful in a generic way in any branch of science and engineering.
 
-
+\end{description}
 
 \section{Thesis Organization}
 
@@ -124,7 +125,9 @@ In Chapter~\ref{ch:mammle}, we introduce MAMMLE, a framework for inferring bette
 Chapter~\ref{ch:snoga} focuses on species tree estimation from multi-locus data. Here we explicitly consider that different regions within the genome can evolve independently and the species tree should be reconstructed as a generalization of the gene lineages. After discussing the present state of the problem, we formulate the task as a multi-objective task utilizing different statistically consistent criteria from existing summary methods and design a customized multi-objective optimization algorithm.
 
 
-Finally, we conclude our thesis by summarizing the major contributions and findings, outlining future directions for extending the accomplished research works, and discussing some of our ongoing works inspired by the central theme of this thesis in Chapter~\ref{ch:conclusion}.
+Finally, we conclude our thesis in Chapter~\ref{ch:conclusion} by summarizing the major contributions and findings, outlining future directions for extending the accomplished research works, and presenting some of the preliminary results of two ongoing works that steals from this thesis the newly introduced concept of application-awareness, thereby suggesting the universal appeal thereof.
+
+%discussing some of our ongoing works inspired by the central theme of this thesis in Chapter~\ref{ch:conclusion}.
 
 \begin{comment}
 

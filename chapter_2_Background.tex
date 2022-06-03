@@ -26,8 +26,7 @@ In a rooted phylogenetic tree (left part of Fig.~\ref{fig:outgroup}), one vertex
 \begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=1.0\textwidth]{Figure/phy-pipeline}
-	\caption[Tasks involved in a phylogeny estimation pipeline.]{Tasks involved in a phylogeny estimation pipeline. It starts by sequencing samples across the genome of different species under consideration. Then in Step 1 the processed sequence data for each gene arealigned using an MSA method. Step 2 infers
-		species phylogeny from the aligned gene sequence data. Two major approaches are used tobuild phylogenies from multiple genes. In the combined approach, all gene alignments areconcatenated into a supermatrix, which is then analyzed using a phylogeny estimation method of choice. The summary method first compute a separate tree for each gene, and then then summarize the discordant gene trees in the best possible manner. Image borrowed from~\cite{mirarab2015novel}}
+	\caption[Tasks involved in a phylogeny estimation pipeline.]{Tasks involved in a phylogeny estimation pipeline. It starts by sequencing samples across the genome of different species under consideration. Then in Step 1 the processed sequence data for each gene are aligned using an MSA method. Step 2 infers species phylogeny from the aligned gene sequence data. Two major approaches are used to build phylogenies from multiple genes. In the combined approach, all gene alignments are concatenated into a supermatrix, which is then analyzed using a phylogeny estimation method of choice. The summary method first compute a separate tree for each gene, and then then summarize the discordant gene trees in the best possible manner. Image borrowed from~\cite{mirarab2015novel}.}
 	\label{fig:phy-pipeline}
 	
 \end{figure}
@@ -70,7 +69,7 @@ Incomplete lineage sorting (ILS) refers to the failure of two gene lineages to c
 \begin{figure}[!tb]
 	\centering
 	\includegraphics[width=0.33\textwidth]{Figure/ils.eps}
-	\caption{Example of gene tree-species tree discordance due to incomplete lineage sorting. Going back in time, the gene copies within species $B$ and $C$ first meet at their corresponding speciation point, but fail to coalesce. Both the lineages (dashed and solid black lines) exist on deeper ancestral branch. The gene from $C$ first coalesces with the gene from species $D$, and subsequently with the gene from $B$.
+	\caption[Example of gene tree-species tree discordance due to incomplete lineage sorting.]{Example of gene tree-species tree discordance due to incomplete lineage sorting. Going back in time, the gene copies within species $B$ and $C$ first meet at their corresponding speciation point, but fail to coalesce. Both the lineages (dashed and solid black lines) exist on deeper ancestral branch. The gene from $C$ first coalesces with the gene from species $D$, and subsequently with the gene from $B$.
 	}
 	\label{fig:ils}
 \end{figure}
